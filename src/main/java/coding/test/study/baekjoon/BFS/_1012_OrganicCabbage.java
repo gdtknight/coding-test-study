@@ -13,7 +13,8 @@ public class _1012_OrganicCabbage {
   static int M;
   static int N;
   static int K;
-  static Pos[] dirs = new Pos[] { new Pos(1, 0), new Pos(-1, 0), new Pos(0, 1), new Pos(0, -1) };
+  static CabbagePos[] dirs = new CabbagePos[] { new CabbagePos(1, 0), new CabbagePos(-1, 0), new CabbagePos(0, 1),
+      new CabbagePos(0, -1) };
   static Queue<CabbagePos> queue;
 
   public static void main(String[] args) throws IOException {
@@ -109,7 +110,7 @@ class CabbagePos {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    Pos other = (Pos) obj;
+    CabbagePos other = (CabbagePos) obj;
     if (m != other.m)
       return false;
     if (n != other.n)

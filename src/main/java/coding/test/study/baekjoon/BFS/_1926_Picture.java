@@ -11,13 +11,13 @@ import java.util.StringTokenizer;
 
 public class _1926_Picture {
 
-  static Pos[] dirs = new Pos[] { new Pos(1, 0), new Pos(-1, 0), new Pos(0, 1), new Pos(0, -1) };
+  static PicPos[] dirs = new PicPos[] { new PicPos(1, 0), new PicPos(-1, 0), new PicPos(0, 1), new PicPos(0, -1) };
   static int width;
   static int height;
-  static Queue<Pos> queue;
-  static Queue<Pos> fireQueue;
-  static Set<Pos> hist;
-  static Queue<Pos> fireHist;
+  static Queue<PicPos> queue;
+  static Queue<PicPos> fireQueue;
+  static Set<PicPos> hist;
+  static Queue<PicPos> fireHist;
 
   public static void main(String[] args) throws IOException {
     String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources/";
@@ -67,20 +67,20 @@ public class _1926_Picture {
   private static int calculateArea(String[][] pic, int h, int w) {
     int area = 1;
 
-    Queue<Pos> queue = new LinkedList<>();
+    Queue<PicPos> queue = new LinkedList<>();
 
     pic[h][w] = "2";
-    queue.offer(new Pos(h, w));
+    queue.offer(new PicPos(h, w));
 
     while (!queue.isEmpty()) {
-      Pos cur = queue.poll();
+      PicPos cur = queue.poll();
       for (int i = 0; i < dirs.length; i++) {
         int nextH = cur.getH() + dirs[i].getH();
         int nextW = cur.getW() + dirs[i].getW();
         if (isIn(nextH, nextW) && "1".equals(pic[nextH][nextW])) {
           pic[nextH][nextW] = "2";
           area += 1;
-          queue.offer(new Pos(nextH, nextW));
+          queue.offer(new PicPos(nextH, nextW));
         }
       }
     }
@@ -100,5 +100,48 @@ public class _1926_Picture {
   private static boolean isIn(int nextH, int nextW) {
     return (0 <= nextH && nextH < height)
         && (0 <= nextW && nextW < width);
+  }
+}
+
+class PicPos {
+  int h;
+  int w;
+
+  public PicPos(int h, int w) {
+    this.h = h;
+    this.w = w;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + h;
+    result = prime * result + w;
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    PicPos other = (PicPos) obj;
+    if (h != other.h)
+      return false;
+    if (w != other.w)
+      return false;
+    return true;
+  }
+
+  public int getH() {
+    return h;
+  }
+
+  public int getW() {
+    return w;
   }
 }

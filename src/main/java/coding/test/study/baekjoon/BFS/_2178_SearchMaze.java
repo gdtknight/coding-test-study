@@ -11,13 +11,14 @@ import java.util.StringTokenizer;
 
 public class _2178_SearchMaze {
 
-  static Pos[] dirs = new Pos[] { new Pos(1, 0), new Pos(-1, 0), new Pos(0, 1), new Pos(0, -1) };
+  static SearchPos[] dirs = new SearchPos[] { new SearchPos(1, 0), new SearchPos(-1, 0), new SearchPos(0, 1),
+      new SearchPos(0, -1) };
   static int width;
   static int height;
-  static Queue<Pos> queue;
-  static Queue<Pos> fireQueue;
-  static Set<Pos> hist;
-  static Queue<Pos> fireHist;
+  static Queue<SearchPos> queue;
+  static Queue<SearchPos> fireQueue;
+  static Set<SearchPos> hist;
+  static Queue<SearchPos> fireHist;
 
   public static void main(String[] args) throws IOException {
     String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources/";
@@ -43,14 +44,14 @@ public class _2178_SearchMaze {
   }
 
   public static void findDestination(String[][] maze) {
-    Queue<Pos> queue = new LinkedList<>();
+    Queue<SearchPos> queue = new LinkedList<>();
     int cnt = 0;
 
     cnt += 1;
-    queue.offer(new Pos(0, 0));
+    queue.offer(new SearchPos(0, 0));
 
     while (!queue.isEmpty()) {
-      Pos cur = queue.poll();
+      SearchPos cur = queue.poll();
       if (cur.getH() == height - 1 && cur.getW() == width - 1) {
         System.out.println(maze[cur.getH()][cur.getW()]);
         break;
@@ -63,7 +64,7 @@ public class _2178_SearchMaze {
         int nextW = cur.getW() + dirs[i].getW();
         if (isIn(nextH, nextW) && "1".equals(maze[nextH][nextW])) {
           maze[nextH][nextW] = cnt + "";
-          queue.offer(new Pos(nextH, nextW));
+          queue.offer(new SearchPos(nextH, nextW));
         }
       }
     }
@@ -81,5 +82,48 @@ public class _2178_SearchMaze {
       }
       System.out.println();
     }
+  }
+}
+
+class SearchPos {
+  int h;
+  int w;
+
+  public SearchPos(int h, int w) {
+    this.h = h;
+    this.w = w;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + h;
+    result = prime * result + w;
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    SearchPos other = (SearchPos) obj;
+    if (h != other.h)
+      return false;
+    if (w != other.w)
+      return false;
+    return true;
+  }
+
+  public int getH() {
+    return h;
+  }
+
+  public int getW() {
+    return w;
   }
 }
