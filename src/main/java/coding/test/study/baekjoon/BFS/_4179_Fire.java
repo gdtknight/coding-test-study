@@ -68,6 +68,8 @@ public class _4179_Fire {
       int curR = curFirePos.getR();
       int curC = curFirePos.getC();
 
+      time = Integer.parseInt(maze[curR][curC]);
+
       if (curC == 0 || curC == cols - 1 || curR == 0 || curR == rows - 1) {
         return time + 1 + "";
       }
@@ -80,7 +82,7 @@ public class _4179_Fire {
       printMaze(maze);
     }
 
-    return "IMFirePosSIBLE";
+    return "IMPOSSIBLE";
   }
 
   private static void addToQueue(String[][] maze, FirePos curFirePos, int time) {
