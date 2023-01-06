@@ -1,20 +1,20 @@
 package coding.test.study.baekjoon.BFS;
 
 public class Pos {
-  int h;
-  int w;
+  int m;
+  int n;
 
-  public Pos(int h, int w) {
-    this.h = h;
-    this.w = w;
+  public Pos(int m, int n) {
+    this.m = m;
+    this.n = n;
   }
 
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + h;
-    result = prime * result + w;
+    result = prime * result + m;
+    result = prime * result + n;
     return result;
   }
 
@@ -27,18 +27,18 @@ public class Pos {
     if (getClass() != obj.getClass())
       return false;
     Pos other = (Pos) obj;
-    if (h != other.h)
+    if (m != other.m)
       return false;
-    if (w != other.w)
+    if (n != other.n)
       return false;
     return true;
   }
 
-  public int getH() {
-    return h;
+  public int getM() {
+    return m;
   }
 
-  public int getW() {
-    return w;
+  public int getN() {
+    return n;
   }
 }
