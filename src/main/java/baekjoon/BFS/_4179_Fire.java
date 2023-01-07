@@ -1,4 +1,4 @@
-package coding.test.study.baekjoon.BFS;
+package baekjoon.BFS;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -17,8 +17,10 @@ public class _4179_Fire {
   static Queue<FirePos> fireQueue;
 
   public static void main(String[] args) throws IOException {
-    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources/";
-    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePathRoot + "_4179_TestCase")));
+    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
+    String packagePath = "/baekjoon/BFS";
+    BufferedReader br = new BufferedReader(new InputStreamReader(
+        new FileInputStream(filePathRoot + packagePath + "/_4179_TestCase")));
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     StringTokenizer st = new StringTokenizer(br.readLine());
@@ -63,16 +65,16 @@ public class _4179_Fire {
     }
 
     while (!queue.isEmpty()) {
+      if (checkQueue(maze)) {
+
+      }
+
       FirePos curFirePos = queue.poll();
 
       int curR = curFirePos.getR();
       int curC = curFirePos.getC();
 
       time = Integer.parseInt(maze[curR][curC]);
-
-      if (curC == 0 || curC == cols - 1 || curR == 0 || curR == rows - 1) {
-        return time + 1 + "";
-      }
 
       maze[curR][curC] = "J";
       fire(maze);
@@ -83,6 +85,25 @@ public class _4179_Fire {
     }
 
     return "IMPOSSIBLE";
+  }
+
+  private static boolean checkQueue(String[][] maze) {
+    Queue<FirePos> tmpQueue = new LinkedList<>();
+
+    while (!queue.isEmpty()) {
+      FirePos pos = queue.poll();
+
+      int curR = pos.getR();
+      int curC = pos.getC();
+
+      if (curC == 0 || curC == cols - 1 || curR == 0 || curR == rows - 1) {
+        return true;
+      }
+      tmpQueue.add(pos);
+    }
+
+    queue = tmpQueue;
+    return false;
   }
 
   private static void addToQueue(String[][] maze, FirePos curFirePos, int time) {
@@ -128,12 +149,14 @@ public class _4179_Fire {
   }
 
   private static void printMaze(String[][] maze) {
+    System.out.println();
     for (int h = 0; h < rows; h++) {
       for (int w = 0; w < cols; w++) {
         System.out.print(maze[h][w] + " ");
       }
       System.out.println();
     }
+    System.out.println();
   }
 }
 

@@ -1,6 +1,7 @@
-package coding.test.study.baekjoon.BFS;
+package baekjoon.BFS;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
@@ -15,11 +16,11 @@ public class _1697_HideAndSeek {
   static int[] distance = new int[100_001];
 
   public static void main(String[] args) throws IOException {
-    // String filePathRoot =
-    // "/home/ubuntu/workspace/coding-test-study/src/main/resources/";
-    // BufferedReader br = new BufferedReader(new InputStreamReader(new
-    // FileInputStream(filePathRoot + "_1697_TestCase")));
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
+    String packagePath = "/baekjoon/BFS";
+    BufferedReader br = new BufferedReader(new InputStreamReader(
+        new FileInputStream(filePathRoot + packagePath + "/_1697_TestCase")));
+    // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     StringTokenizer st = new StringTokenizer(br.readLine());
     N = Integer.parseInt(st.nextToken());

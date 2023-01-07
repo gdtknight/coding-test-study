@@ -1,4 +1,4 @@
-package coding.test.study.baekjoon.BFS;
+package baekjoon.BFS;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -21,10 +21,13 @@ public class _5427_Fire {
   static Set<List<Integer>> fireHist;
 
   public static void main(String[] args) throws IOException {
-    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources/";
+    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
+    String packagePath = "/baekjoon/BFS";
 
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePathRoot + "_5427_TestCase")));
+    BufferedReader br = new BufferedReader(new InputStreamReader(
+        new FileInputStream(filePathRoot + packagePath + "/_5427_TestCase")));
+
     int numsOfTestCase = Integer.parseInt(br.readLine());
 
     for (int i = 0; i < numsOfTestCase; i++) {

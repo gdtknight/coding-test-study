@@ -1,4 +1,4 @@
-package coding.test.study.baekjoon.BFS;
+package baekjoon.BFS;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -18,8 +18,10 @@ public class _1012_OrganicCabbage {
   static Queue<CabbagePos> queue;
 
   public static void main(String[] args) throws IOException {
-    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources/BFS/";
-    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePathRoot + "_1012_TestCase")));
+    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
+    String packagePath = "/baekjoon/BFS";
+    BufferedReader br = new BufferedReader(new InputStreamReader(
+        new FileInputStream(filePathRoot + packagePath + "/_1012_TestCase")));
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     int numsOfTestCase = Integer.parseInt(br.readLine());
