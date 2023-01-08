@@ -32,77 +32,65 @@ public class _2206_WallMaze {
     M = Integer.parseInt(st.nextToken());
 
     Integer[][] maze = new Integer[N][M];
+    Integer[][] tmpMaze = new Integer[N][M];
 
     for (int n = 0; n < N; n++) {
       String[] line = br.readLine().split("");
       for (int m = 0; m < M; m++) {
-        maze[n][m] = Integer.parseInt(line[m]);
+        maze[n][m] = Integer.parseInt(line[m]) * -2;
+        tmpMaze[n][m] = Integer.parseInt(line[m]) * -2;
       }
     }
 
     // 결과 출력 부분
-    printMaze(maze);
-    System.out.println(getDistance(maze));
-    printMaze(maze);
+    System.out.println(getDistance(maze, tmpMaze));
     br.close();
   }
 
-  public static Integer getDistance(Integer[][] maze) {
-    WallPos start = new WallPos(0, 0);
-    WallPos destination = new WallPos(N - 1, M - 1);
-
-    Queue<WallPos> queue = new LinkedList<>();
-    Queue<WallPos> newQueue = new LinkedList<>();
-
-    int curTime = -1;
-    maze[0][0] = -1;
-    queue.offer(start);
+  public static Integer getDistance(Integer[][] maze, Integer[][] tmpMaze) {
+    maze[0][0] = 1;
 
     int minDistance = Integer.MAX_VALUE;
+
+    WallPos start = new WallPos(0, 0);
+    WallPos dest = new WallPos(N - 1, M - 1);
+
+    Queue<WallPos> queue = new LinkedList<>();
+
+    queue.offer(start);
+
     while (!queue.isEmpty()) {
-      curTime -= 1;
+      WallPos cur = queue.poll();
 
-      while (!queue.isEmpty()) {
-        WallPos cur = queue.poll();
+      int curN = cur.getN();
+      int curM = cur.getM();
 
-        int curN = cur.getN();
-        int curM = cur.getM();
+      int curDistance = maze[curN][curM];
 
-        for (int i = 0; i < dirs.length; i++) {
-          int nextN = curN + dirs[i].getN();
-          int nextM = curM + dirs[i].getM();
+      for (int i = 0; i < dirs.length; i++) {
+        int nextN = curN + dirs[i].getN();
+        int nextM = curM + dirs[i].getM();
 
-          if (isIn(nextN, nextM)) {
-            if (nextN == N - 1 && nextM == M - 1) {
-              int distance = Math.abs(curTime);
-
-              if (distance < minDistance) {
-                distance = minDistance;
-              }
-
-            } else if (maze[nextN][nextM] == 0) {
-
-              maze[nextN][nextM] = curTime;
-              newQueue.offer(new WallPos(nextN, nextM));
-
-            } else if (maze[nextN][nextM] == 1) {
-              maze[nextN][nextM] = curTime - 100;
-            }
+        if (isIn(nextN, nextM)) {
+          if (maze[nextN][nextM] == 0) {
+            maze[nextN][nextM] = curDistance + 1;
+            queue.offer(new WallPos(nextN, nextM));
+          } else if (maze[nextN][nextM] == -2) {
+            maze[nextN][nextM] = curDistance + 10001;
+            tmpMaze[nextN][nextM] = maze[nextN][nextM];
           }
         }
       }
-
-      while (!newQueue.isEmpty()) {
-        queue.offer(newQueue.poll());
-      }
     }
 
-    curTime = -1;
-    maze[N - 1][M - 1] = -1;
-    queue.offer(destination);
+    // printMaze(maze);
+    // printMaze(tmpMaze);
 
-    while (!queue.isEmpty()) {
-      curTime -= 1;
+    if (maze[N - 1][M - 1] != 0) {
+      minDistance = maze[N - 1][M - 1];
+
+      tmpMaze[N - 1][M - 1] = 1;
+      queue.offer(dest);
 
       while (!queue.isEmpty()) {
         WallPos cur = queue.poll();
@@ -110,41 +98,77 @@ public class _2206_WallMaze {
         int curN = cur.getN();
         int curM = cur.getM();
 
+        int curDistance = tmpMaze[curN][curM];
+
         for (int i = 0; i < dirs.length; i++) {
           int nextN = curN + dirs[i].getN();
           int nextM = curM + dirs[i].getM();
 
           if (isIn(nextN, nextM)) {
-            if (maze[nextN][nextM] < -100) {
-              int distance = Math.abs(curTime + maze[nextN][nextM] + 101);
+            if (tmpMaze[nextN][nextM] == 0) {
+
+              tmpMaze[nextN][nextM] = curDistance + 1;
+              queue.offer(new WallPos(nextN, nextM));
+
+            } else if (tmpMaze[nextN][nextM] > 10000) {
+              int distance = curDistance + tmpMaze[nextN][nextM] - 10000;
               if (distance < minDistance) {
                 minDistance = distance;
               }
-            } else if (maze[nextN][nextM] == 0) {
-              maze[nextN][nextM] = curTime;
-              newQueue.offer(new WallPos(nextN, nextM));
             }
           }
         }
       }
 
-      while (!newQueue.isEmpty()) {
-        queue.offer(newQueue.poll());
+    } else {
+      tmpMaze[N - 1][M - 1] = 1;
+      queue.offer(dest);
+
+      while (!queue.isEmpty()) {
+        WallPos cur = queue.poll();
+
+        int curN = cur.getN();
+        int curM = cur.getM();
+
+        int curDistance = tmpMaze[curN][curM];
+
+        for (int i = 0; i < dirs.length; i++) {
+          int nextN = curN + dirs[i].getN();
+          int nextM = curM + dirs[i].getM();
+
+          if (isIn(nextN, nextM)) {
+            if (tmpMaze[nextN][nextM] == 0) {
+
+              tmpMaze[nextN][nextM] = curDistance + 1;
+              queue.offer(new WallPos(nextN, nextM));
+
+            } else if (tmpMaze[nextN][nextM] > 10000) {
+              int distance = curDistance + tmpMaze[nextN][nextM] - 10000;
+              if (distance < minDistance) {
+                minDistance = distance;
+              }
+            }
+          }
+        }
       }
     }
+
+    // printMaze(maze);
+    // printMaze(tmpMaze);
 
     return minDistance == Integer.MAX_VALUE ? -1 : minDistance;
   }
 
   public static boolean isIn(int n, int m) {
-    return (0 <= n && n < N) && (0 <= m && m < M);
+    return (0 <= n && n < N)
+        && (0 <= m && m < M);
   }
 
   public static void printMaze(Integer[][] maze) {
     System.out.println();
     for (int n = 0; n < N; n++) {
       for (int m = 0; m < M; m++) {
-        System.out.printf("%5d", maze[n][m]);
+        System.out.printf("%6d", maze[n][m]);
       }
       System.out.println();
     }
