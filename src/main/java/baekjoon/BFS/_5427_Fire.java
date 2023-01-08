@@ -4,46 +4,44 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 public class _5427_Fire {
-  static int[][] dirs = new int[][] { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
-  static int width;
-  static int height;
-  static Queue<List<Integer>> queue;
-  static Set<List<Integer>> hist;
-  static Set<List<Integer>> fireHist;
+  static Pos[] dirs = new Pos[] {
+      new Pos(1, 0),
+      new Pos(-1, 0),
+      new Pos(0, 1),
+      new Pos(0, -1)
+  };
+
+  static int W;
+  static int H;
+  static int N;
 
   public static void main(String[] args) throws IOException {
     String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
     String packagePath = "/baekjoon/BFS";
-
-    // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     BufferedReader br = new BufferedReader(new InputStreamReader(
         new FileInputStream(filePathRoot + packagePath + "/_5427_TestCase")));
 
-    int numsOfTestCase = Integer.parseInt(br.readLine());
+    // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    for (int i = 0; i < numsOfTestCase; i++) {
+    N = Integer.parseInt(br.readLine());
+
+    for (int i = 0; i < N; i++) {
       StringTokenizer st = new StringTokenizer(br.readLine());
-      width = Integer.parseInt(st.nextToken());
-      height = Integer.parseInt(st.nextToken());
+      W = Integer.parseInt(st.nextToken());
+      H = Integer.parseInt(st.nextToken());
 
-      queue = new LinkedList<>();
-      hist = new HashSet<>();
-      fireHist = new HashSet<>();
+      char[][] maze = new char[H][W];
 
-      String[][] maze = new String[height][];
-
-      for (int h = 0; h < height; h++) {
-        String[] w = br.readLine().split("");
-        maze[h] = w;
+      for (int h = 0; h < H; h++) {
+        String line = br.readLine();
+        for (int w = 0; w < W; w++) {
+          maze[h][w] = line.charAt(w);
+        }
       }
 
       // 결과 출력 부분
@@ -52,88 +50,100 @@ public class _5427_Fire {
     br.close();
   }
 
-  public static String escapeTime(String[][] maze) {
+  public static String escapeTime(char[][] maze) {
     int time = 0;
+    Queue<Pos> queue = new LinkedList<>();
+    Queue<Pos> fireQueue = new LinkedList<>();
+    Queue<Pos> newQueue = new LinkedList<>();
+    Queue<Pos> newFireQueue = new LinkedList<>();
 
-    initFireHist(maze);
+    for (int h = 0; h < H; h++) {
+      for (int w = 0; w < W; w++) {
+        if (maze[h][w] == '@') {
+          time += 1;
+          maze[h][w] = '-';
+          queue.offer(new Pos(h, w));
+        }
 
-    List<Integer> curPos = findPos(maze);
-    queue.offer(curPos);
-    hist.add(curPos);
-    fire(maze);
-    findWayAndAddToQueue(maze, curPos);
-    while (!queue.isEmpty()) {
-      curPos = queue.poll();
-      int curX = curPos.get(0);
-      int curY = curPos.get(1);
-      if (curX == 0 || curX == width || curY == 0 || curY == height) {
-        return (time + 1) + "";
+        if (maze[h][w] == '*') {
+          fireQueue.offer(new Pos(h, w));
+        }
       }
-      fire(maze);
-      findWayAndAddToQueue(maze, curPos);
+    }
+
+    while (!queue.isEmpty()) {
+
+      while (!fireQueue.isEmpty()) {
+        Pos curFirePos = fireQueue.poll();
+
+        int curH = curFirePos.getH();
+        int curW = curFirePos.getW();
+
+        for (int i = 0; i < dirs.length; i++) {
+          int nextH = curH + dirs[i].getH();
+          int nextW = curW + dirs[i].getW();
+          if (isIn(nextH, nextW)
+              && (maze[nextH][nextW] == '.' || maze[nextH][nextW] == '-')) {
+            maze[nextH][nextW] = '*';
+            newFireQueue.offer(new Pos(nextH, nextW));
+          }
+
+        }
+      }
+
+      while (!queue.isEmpty()) {
+        Pos curPos = queue.poll();
+
+        int curH = curPos.getH();
+        int curW = curPos.getW();
+
+        if (curH == 0 || curH == H - 1 || curW == 0 || curW == W - 1) {
+          return (time) + "";
+        }
+
+        for (int i = 0; i < dirs.length; i++) {
+          int nextH = curH + dirs[i].getH();
+          int nextW = curW + dirs[i].getW();
+          if (isIn(nextH, nextW) && maze[nextH][nextW] == '.') {
+            maze[nextH][nextW] = '@';
+            newQueue.offer(new Pos(nextH, nextW));
+          }
+        }
+        maze[curH][curW] = '-';
+      }
+
       time += 1;
+      while (!newFireQueue.isEmpty()) {
+        fireQueue.offer(newFireQueue.poll());
+      }
+      while (!newQueue.isEmpty()) {
+        queue.offer(newQueue.poll());
+      }
     }
 
     return "IMPOSSIBLE";
   }
 
-  private static List<Integer> findPos(String[][] maze) {
-    for (int h = 0; h < height; h++) {
-      for (int w = 0; w < width; w++) {
-        if ("@".equals(maze[h][w])) {
-          return Arrays.asList(h, w);
-
-        }
-      }
-    }
-    return null;
-  }
-
-  private static void findWayAndAddToQueue(String[][] maze, List<Integer> curPos) {
-    for (int i = 0; i < 4; i++) {
-      int nextH = curPos.get(0) + dirs[i][0];
-      int nextW = curPos.get(1) + dirs[i][1];
-      boolean inMaze = isIn(nextH, nextW);
-      if (inMaze) {
-        List<Integer> nextPos = Arrays.asList(nextH, nextW);
-        if (".".equals(maze[nextH][nextW]) && !hist.add(nextPos)) {
-          queue.offer(Arrays.asList(nextH, nextW));
-        }
-      }
-    }
-  }
-
-  private static void initFireHist(String[][] maze) {
-    for (int h = 0; h < height; h++) {
-      for (int w = 0; w < width; w++) {
-        if ("*".equals(maze[h][w])) {
-          fireHist.add(Arrays.asList(w, h));
-        }
-      }
-    }
-  }
-
-  public static void fire(String[][] maze) {
-    Set<List<Integer>> newFireHist = new HashSet<>();
-    for (List<Integer> pos : fireHist) {
-      newFireHist.add(pos);
-      for (int i = 0; i < dirs.length; i++) {
-        int nextH = pos.get(0) + dirs[i][0];
-        int nextW = pos.get(1) + dirs[i][1];
-
-        boolean inMaze = isIn(nextH, nextW);
-
-        if (inMaze && ".".equals(maze[nextH][nextW])) {
-          maze[nextH][nextW] = "*";
-          newFireHist.add(Arrays.asList(nextH, nextW));
-        }
-      }
-    }
-    fireHist = newFireHist;
-  }
-
   public static boolean isIn(int h, int w) {
-    return (0 <= h && h < height) && (0 <= w && w < width);
+    return (0 <= h && h < H) && (0 <= w && w < W);
   }
 
+}
+
+class Pos {
+  int h;
+  int w;
+
+  public Pos(int h, int w) {
+    this.h = h;
+    this.w = w;
+  }
+
+  public int getH() {
+    return h;
+  }
+
+  public int getW() {
+    return w;
+  }
 }
