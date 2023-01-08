@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
@@ -43,7 +41,9 @@ public class _2206_WallMaze {
     }
 
     // 결과 출력 부분
+    printMaze(maze);
     System.out.println(getDistance(maze));
+    printMaze(maze);
     br.close();
   }
 
@@ -54,12 +54,11 @@ public class _2206_WallMaze {
     Queue<WallPos> queue = new LinkedList<>();
     Queue<WallPos> newQueue = new LinkedList<>();
 
-    Map<WallPos, Integer> visitedMap = new HashMap<>();
-
     int curTime = -1;
     maze[0][0] = -1;
     queue.offer(start);
 
+    int minDistance = Integer.MAX_VALUE;
     while (!queue.isEmpty()) {
       curTime -= 1;
 
@@ -74,15 +73,20 @@ public class _2206_WallMaze {
           int nextM = curM + dirs[i].getM();
 
           if (isIn(nextN, nextM)) {
-            if (maze[nextN][nextM] == 0) {
+            if (nextN == N - 1 && nextM == M - 1) {
+              int distance = Math.abs(curTime);
+
+              if (distance < minDistance) {
+                distance = minDistance;
+              }
+
+            } else if (maze[nextN][nextM] == 0) {
 
               maze[nextN][nextM] = curTime;
               newQueue.offer(new WallPos(nextN, nextM));
 
             } else if (maze[nextN][nextM] == 1) {
-
-              visitedMap.put(new WallPos(nextN, nextM), curTime);
-
+              maze[nextN][nextM] = curTime - 100;
             }
           }
         }
@@ -91,10 +95,6 @@ public class _2206_WallMaze {
       while (!newQueue.isEmpty()) {
         queue.offer(newQueue.poll());
       }
-    }
-
-    if (visitedMap.containsKey(destination)) {
-      return Math.abs(visitedMap.get(destination));
     }
 
     curTime = -1;
@@ -115,16 +115,14 @@ public class _2206_WallMaze {
           int nextM = curM + dirs[i].getM();
 
           if (isIn(nextN, nextM)) {
-            if (maze[nextN][nextM] == 0) {
-
+            if (maze[nextN][nextM] < -100) {
+              int distance = Math.abs(curTime + maze[nextN][nextM] + 101);
+              if (distance < minDistance) {
+                minDistance = distance;
+              }
+            } else if (maze[nextN][nextM] == 0) {
               maze[nextN][nextM] = curTime;
               newQueue.offer(new WallPos(nextN, nextM));
-
-            } else if (maze[nextN][nextM] == 1) {
-              WallPos wall = new WallPos(nextN, nextM);
-              if (visitedMap.containsKey(wall)) {
-                return Math.abs(curTime + visitedMap.get(wall)) - 1;
-              }
             }
           }
         }
@@ -135,11 +133,22 @@ public class _2206_WallMaze {
       }
     }
 
-    return -1;
+    return minDistance == Integer.MAX_VALUE ? -1 : minDistance;
   }
 
   public static boolean isIn(int n, int m) {
     return (0 <= n && n < N) && (0 <= m && m < M);
+  }
+
+  public static void printMaze(Integer[][] maze) {
+    System.out.println();
+    for (int n = 0; n < N; n++) {
+      for (int m = 0; m < M; m++) {
+        System.out.printf("%5d", maze[n][m]);
+      }
+      System.out.println();
+    }
+    System.out.println();
   }
 
 }
