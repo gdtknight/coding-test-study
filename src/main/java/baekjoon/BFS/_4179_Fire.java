@@ -9,150 +9,131 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class _4179_Fire {
-  static FirePos[] dirs = new FirePos[] { new FirePos(1, 0), new FirePos(-1, 0), new FirePos(0, 1),
-      new FirePos(0, -1) };
-  static int rows;
+  static FirePos[] dirs = new FirePos[] {
+      new FirePos(1, 0),
+      new FirePos(-1, 0),
+      new FirePos(0, 1),
+      new FirePos(0, -1)
+  };
+
   static int cols;
-  static Queue<FirePos> queue;
-  static Queue<FirePos> fireQueue;
+  static int rows;
 
   public static void main(String[] args) throws IOException {
     String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
     String packagePath = "/baekjoon/BFS";
     BufferedReader br = new BufferedReader(new InputStreamReader(
         new FileInputStream(filePathRoot + packagePath + "/_4179_TestCase")));
+
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     StringTokenizer st = new StringTokenizer(br.readLine());
     rows = Integer.parseInt(st.nextToken());
     cols = Integer.parseInt(st.nextToken());
 
-    queue = new LinkedList<>();
-    fireQueue = new LinkedList<>();
-
-    String[][] maze = new String[rows][];
+    char[][] maze = new char[rows][cols];
 
     for (int r = 0; r < rows; r++) {
-      String[] c = br.readLine().split("");
-      maze[r] = c;
-    }
-
-    // 결과 출력 부분
-    System.out.println(escapeTime(maze));
-
-    br.close();
-  }
-
-  public static String escapeTime(String[][] maze) {
-    int time = 0;
-
-    outer: for (int r = 0; r < rows; r++) {
+      String line = br.readLine();
       for (int c = 0; c < cols; c++) {
-        if ("J".equals(maze[r][c])) {
-          maze[r][c] = time + "";
-          queue.offer(new FirePos(r, c));
-          break outer;
-        }
+        maze[r][c] = line.charAt(c);
       }
     }
 
+    // 결과 출력 부분
+    printMaze(maze);
+    System.out.println(escapeTime(maze));
+    printMaze(maze);
+    br.close();
+  }
+
+  public static String escapeTime(char[][] maze) {
+    int time = 0;
+
+    Queue<FirePos> queue = new LinkedList<>();
+    Queue<FirePos> fireQueue = new LinkedList<>();
+    Queue<FirePos> newQueue = new LinkedList<>();
+    Queue<FirePos> newFireQueue = new LinkedList<>();
+
     for (int r = 0; r < rows; r++) {
       for (int c = 0; c < cols; c++) {
-        if ("F".equals(maze[r][c])) {
+        if (maze[r][c] == 'J') {
+          time += 1;
+          maze[r][c] = '-';
+          queue.offer(new FirePos(r, c));
+        }
+
+        if (maze[r][c] == 'F') {
           fireQueue.offer(new FirePos(r, c));
         }
       }
     }
 
     while (!queue.isEmpty()) {
-      if (checkQueue(maze)) {
 
+      while (!fireQueue.isEmpty()) {
+        FirePos curFirePos = fireQueue.poll();
+
+        int curH = curFirePos.getR();
+        int curW = curFirePos.getC();
+
+        for (int i = 0; i < dirs.length; i++) {
+          int nextH = curH + dirs[i].getR();
+          int nextW = curW + dirs[i].getC();
+          if (isIn(nextH, nextW)
+              && (maze[nextH][nextW] == '.' || maze[nextH][nextW] == '-')) {
+            maze[nextH][nextW] = 'F';
+            newFireQueue.offer(new FirePos(nextH, nextW));
+          }
+
+        }
       }
 
-      FirePos curFirePos = queue.poll();
+      while (!queue.isEmpty()) {
+        FirePos curPos = queue.poll();
 
-      int curR = curFirePos.getR();
-      int curC = curFirePos.getC();
+        int curH = curPos.getR();
+        int curW = curPos.getC();
 
-      time = Integer.parseInt(maze[curR][curC]);
+        if (curH == 0 || curH == rows - 1 || curW == 0 || curW == cols - 1) {
+          return time + "";
+        }
 
-      maze[curR][curC] = "J";
-      fire(maze);
-      maze[curR][curC] = time + "";
+        for (int i = 0; i < dirs.length; i++) {
+          int nextH = curH + dirs[i].getR();
+          int nextW = curW + dirs[i].getC();
+          if (isIn(nextH, nextW) && maze[nextH][nextW] == '.') {
+            maze[nextH][nextW] = 'J';
+            newQueue.offer(new FirePos(nextH, nextW));
+          }
+        }
+
+        maze[curH][curW] = '-';
+      }
+
       time += 1;
-      addToQueue(maze, curFirePos, time);
-      printMaze(maze);
+
+      while (!newFireQueue.isEmpty()) {
+        fireQueue.offer(newFireQueue.poll());
+      }
+
+      while (!newQueue.isEmpty()) {
+        queue.offer(newQueue.poll());
+      }
     }
 
     return "IMPOSSIBLE";
   }
 
-  private static boolean checkQueue(String[][] maze) {
-    Queue<FirePos> tmpQueue = new LinkedList<>();
-
-    while (!queue.isEmpty()) {
-      FirePos pos = queue.poll();
-
-      int curR = pos.getR();
-      int curC = pos.getC();
-
-      if (curC == 0 || curC == cols - 1 || curR == 0 || curR == rows - 1) {
-        return true;
-      }
-      tmpQueue.add(pos);
-    }
-
-    queue = tmpQueue;
-    return false;
-  }
-
-  private static void addToQueue(String[][] maze, FirePos curFirePos, int time) {
-    int curR = curFirePos.getR();
-    int curC = curFirePos.getC();
-
-    for (int i = 0; i < dirs.length; i++) {
-      int nextR = curR + dirs[i].getR();
-      int nextC = curC + dirs[i].getC();
-
-      if (inMaze(nextR, nextC) && ".".equals(maze[nextR][nextC])) {
-        maze[nextR][nextC] = time + "";
-        queue.offer(new FirePos(nextR, nextC));
-      }
-    }
-  }
-
-  public static void fire(String[][] maze) {
-    Queue<FirePos> newFireQueue = new LinkedList<>();
-
-    while (!fireQueue.isEmpty()) {
-      FirePos FirePos = fireQueue.poll();
-
-      for (int i = 0; i < dirs.length; i++) {
-        int nextR = FirePos.getR() + dirs[i].getR();
-        int nextC = FirePos.getC() + dirs[i].getC();
-
-        if (inMaze(nextR, nextC)
-            && !"F".equals(maze[nextR][nextC])
-            && !"#".equals(maze[nextR][nextC])
-            && !"J".equals(maze[nextR][nextC])) {
-          maze[nextR][nextC] = "F";
-          newFireQueue.offer(new FirePos(nextR, nextC));
-        }
-      }
-    }
-
-    fireQueue = newFireQueue;
-  }
-
-  public static boolean inMaze(int h, int w) {
+  public static boolean isIn(int h, int w) {
     return (0 <= h && h < rows) && (0 <= w && w < cols);
   }
 
-  private static void printMaze(String[][] maze) {
+  public static void printMaze(char[][] maze) {
     System.out.println();
-    for (int h = 0; h < rows; h++) {
-      for (int w = 0; w < cols; w++) {
-        System.out.print(maze[h][w] + " ");
+    for (int r = 0; r < rows; r++) {
+      for (int c = 0; c < cols; c++) {
+        System.out.print(maze[r][c] + " ");
       }
       System.out.println();
     }
@@ -167,31 +148,6 @@ class FirePos {
   public FirePos(int r, int c) {
     this.r = r;
     this.c = c;
-  }
-
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + r;
-    result = prime * result + c;
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    FirePos other = (FirePos) obj;
-    if (r != other.r)
-      return false;
-    if (c != other.c)
-      return false;
-    return true;
   }
 
   public int getR() {
