@@ -48,12 +48,15 @@ public class _2206_WallMaze {
 
   public static Integer getDistance(Integer[][] maze) {
 
-    int minDistance = Integer.MAX_VALUE;
+    int minDistance = bfs(maze);
 
     for (int n = 0; n < N; n++) {
       for (int m = 0; m < M; m++) {
         if (maze[n][m] == -2) {
+          initMaze(maze);
+
           maze[n][m] = 0;
+
           int distance = bfs(maze);
 
           if (distance < minDistance) {
@@ -68,6 +71,16 @@ public class _2206_WallMaze {
     return minDistance == Integer.MAX_VALUE
         ? -1
         : minDistance;
+  }
+
+  public static void initMaze(Integer[][] maze) {
+    for (int n = 0; n < N; n++) {
+      for (int m = 0; m < M; m++) {
+        if (maze[n][m] != -2) {
+          maze[n][m] = 0;
+        }
+      }
+    }
   }
 
   public static int bfs(Integer[][] maze) {
@@ -89,7 +102,7 @@ public class _2206_WallMaze {
       for (int i = 0; i < dirs.length; i++) {
         int nextN = curN + dirs[i].getN();
         int nextM = curM + dirs[i].getM();
-        if (isIn(nextN, nextM) && (maze[nextN][nextM] >= distance || maze[nextN][nextM] == 0)) {
+        if (isIn(nextN, nextM) && maze[nextN][nextM] == 0) {
           maze[nextN][nextM] = distance + 1;
           queue.offer(new WallPos(nextN, nextM));
         }
