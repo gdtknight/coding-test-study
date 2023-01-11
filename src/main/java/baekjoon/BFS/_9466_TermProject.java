@@ -13,13 +13,12 @@ public class _9466_TermProject {
   static Integer[] choice;
 
   public static void main(String[] args) throws IOException {
-    // String filePathRoot =
-    // "/home/ubuntu/workspace/coding-test-study/src/main/resources";
-    // String packagePath = "/baekjoon/BFS";
-    // BufferedReader br = new BufferedReader(new InputStreamReader(
-    // new FileInputStream(filePathRoot + packagePath + "/_9466_TestCase")));
+    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
+    String packagePath = "/baekjoon/BFS";
+    BufferedReader br = new BufferedReader(new InputStreamReader(
+        new FileInputStream(filePathRoot + packagePath + "/_9466_TestCase")));
 
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     numsOfCase = Integer.parseInt(br.readLine());
 
@@ -37,7 +36,7 @@ public class _9466_TermProject {
       // System.out.println();
       // System.out.println("===== start =====");
       // System.out.println("아웃사이더 수: " + getCount());
-      System.out.println(getCount());
+      System.out.println(countSolo());
       // System.out.println("===== end =====");
     }
 
@@ -45,34 +44,40 @@ public class _9466_TermProject {
     br.close();
   }
 
-  public static int getCount() {
+  public static int countSolo() {
     int cnt = 0;
 
     boolean[] haveTeam = new boolean[numsOfStudent + 1];
     boolean[] visited = new boolean[numsOfStudent + 1];
 
-    int start = 0;
-
     for (int i = 1; i <= numsOfStudent; i++) {
-      visited = new boolean[numsOfStudent + 1];
-      if (haveTeam[i]) {
+      if (haveTeam[i] || visited[i]) {
         continue;
       }
 
-      start = i;
+      int start = i;
+
       boolean foundTeam = false;
-      // System.out.println("start number : " + start);
+      System.out.println("start number : " + start);
       visited[start] = true;
 
       int next = choice[start];
+      System.out.println(start + " 번은 " + next + " 번 선택");
 
-      if (visited[next]) {
+      // 자기 자신을 지목한 경우
+      if (start == next) {
         foundTeam = true;
-        start = next;
+        haveTeam[start] = true;
+        continue;
+      }
+
+      // 이미 확인된 번호
+      if (visited[next]) {
+        continue;
       }
 
       while (!haveTeam[next] && !visited[next] && next != start) {
-        // System.out.println(next + " 번 학생은 " + choice[next] + " 번를 지명");
+        System.out.println(next + " 번 학생은 " + choice[next] + " 번를 지명");
         visited[next] = true;
         next = choice[next];
         if (visited[next]) {
@@ -81,26 +86,28 @@ public class _9466_TermProject {
           break;
         }
       }
-      // System.out.println();
-      // System.out.println("팀 체크 시작");
+
+      System.out.println();
 
       if (foundTeam) {
-        // System.out.println("팀을 찾았습니다 !!");
-        // System.out.print("멤버: " + start + " ");
+        System.out.println("팀을 찾았습니다 !!");
+        System.out.print("멤버: " + start + " ");
         haveTeam[start] = true;
         next = choice[start];
         while (next != start) {
-          // System.out.print(next + " ");
+          System.out.print(next + " ");
           haveTeam[next] = true;
+          visited[next] = true;
           next = choice[next];
         }
-        // System.out.println();
-        // System.out.println("팀 순회 완료");
-        // System.out.println();
+        System.out.println();
+        System.out.println("팀 순회 완료");
+        System.out.println();
       } else {
-        // System.out.println("팀 없음");
+        System.out.println("팀 없음");
       }
     }
+
     for (int i = 1; i < numsOfStudent; i++) {
       if (!haveTeam[i]) {
         cnt += 1;
