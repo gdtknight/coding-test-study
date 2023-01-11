@@ -16,12 +16,13 @@ public class _9466_TermProject {
   static Queue<Integer> queue = new LinkedList<>();
 
   public static void main(String[] args) throws IOException {
-    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
-    String packagePath = "/baekjoon/BFS";
-    BufferedReader br = new BufferedReader(new InputStreamReader(
-        new FileInputStream(filePathRoot + packagePath + "/_9466_TestCase")));
+    // String filePathRoot =
+    // "/home/ubuntu/workspace/coding-test-study/src/main/resources";
+    // String packagePath = "/baekjoon/BFS";
+    // BufferedReader br = new BufferedReader(new InputStreamReader(
+    // new FileInputStream(filePathRoot + packagePath + "/_9466_TestCase")));
 
-    // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     numsOfCase = Integer.parseInt(br.readLine());
 
@@ -42,27 +43,35 @@ public class _9466_TermProject {
       boolean[] visited = new boolean[numsOfStudent + 1];
 
       for (int i = 1; i <= numsOfStudent; i++) {
+
         if (haveTeam[i] || visited[i]) {
+          // System.out.println(i + " 번 학생은 체크 완료됨.");
           continue;
         }
 
+        // System.out.println(i + " 번 학생 체크");
         visited[i] = true;
-        queue.offer(i);
         int next = choice[i];
 
         while (!visited[next]) {
+          // System.out.println(next + " 번 학생 체크");
           visited[next] = true;
-          queue.offer(next);
           next = choice[next];
         }
 
-        while (!queue.isEmpty()) {
-          int cur = queue.poll();
-          if (next == cur) {
-            haveTeam[cur] = true;
-            next = choice[cur];
-          }
+        if (next < i && !haveTeam[next]) {
+          cnt += 1;
+          // System.out.println(next + " 번 학생은 팀 없음");
+          continue;
         }
+
+        int start = next;
+
+        do {
+          // System.out.println(next + " 번 학생 팀 표시");
+          haveTeam[next] = true;
+          next = choice[next];
+        } while (next != start);
 
         if (!haveTeam[i]) {
           cnt += 1;
