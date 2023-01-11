@@ -42,6 +42,7 @@ public class _9466_TermProject {
       boolean[] haveTeam = new boolean[numsOfStudent + 1];
       boolean[] visited = new boolean[numsOfStudent + 1];
 
+      // System.out.println("===== 테스트케이스 " + (n + 1) + " 번 시작 =====");
       for (int i = 1; i <= numsOfStudent; i++) {
 
         if (haveTeam[i] || visited[i]) {
@@ -60,8 +61,8 @@ public class _9466_TermProject {
         }
 
         if (next < i && !haveTeam[next]) {
+          // System.out.println(i + " 번 학생은 팀이 없는 " + next + " 번 학생을 선택함. 따라서 팀이 없음.");
           cnt += 1;
-          // System.out.println(next + " 번 학생은 팀 없음");
           continue;
         }
 
@@ -73,15 +74,23 @@ public class _9466_TermProject {
           next = choice[next];
         } while (next != start);
 
-        if (!haveTeam[i]) {
-          cnt += 1;
-        }
+        start = i;
+        do {
+          if (!haveTeam[start]) {
+            cnt += 1;
+            // System.out.println(i + " 번 학생은 팀 없음.");
+          }
+          start = choice[start];
+        } while (next != start);
       }
 
       System.out.println(cnt);
+      // System.out.println("===== 테스트케이스 종료 =====");
+      // System.out.println();
     }
 
     // 결과 출력 부분
     br.close();
   }
+
 }
