@@ -44,32 +44,37 @@ public class _9466_TermProject {
 
       // System.out.println("===== 테스트케이스 " + (n + 1) + " 번 시작 =====");
       for (int i = 1; i <= numsOfStudent; i++) {
-
-        if (haveTeam[i] || visited[i]) {
-          // System.out.println(i + " 번 학생은 체크 완료됨.");
+        if (visited[i]) {
+          // System.out.println(i + " 번은 이미 확인됨.");
           continue;
         }
 
-        // System.out.println(i + " 번 학생 체크");
+        // System.out.println(i + " 번 체크 시작");
         visited[i] = true;
         int next = choice[i];
 
-        while (!visited[next]) {
-          // System.out.println(next + " 번 학생 체크");
-          visited[next] = true;
-          next = choice[next];
-        }
-
-        if (next < i && !haveTeam[next]) {
-          // System.out.println(i + " 번 학생은 팀이 없는 " + next + " 번 학생을 선택함. 따라서 팀이 없음.");
+        if (next != i && visited[next]) {
+          // System.out.println(i + "번이 선택한 " + next + " 번은 이미 확인됨. ");
           cnt += 1;
           continue;
+        } else if (next == i) {
+          // System.out.println(i + "번은 자기자신 번호 " + next + " 선택");
+          continue;
+        }
+
+        // System.out.println(i + " 번은 " + next + "번 선택");
+        while (!visited[next]) {
+          // System.out.println(next + " 번 학생 체크");
+          // System.out.printf(next + " 번은 ");
+          visited[next] = true;
+          next = choice[next];
+          // System.out.println(next + " 번 선택");
         }
 
         int start = next;
 
         do {
-          // System.out.println(next + " 번 학생 팀 표시");
+          // System.out.println(">>> " + next + " 번 학생 팀 표시");
           haveTeam[next] = true;
           next = choice[next];
         } while (next != start);
@@ -78,7 +83,7 @@ public class _9466_TermProject {
         do {
           if (!haveTeam[start]) {
             cnt += 1;
-            // System.out.println(i + " 번 학생은 팀 없음.");
+            // System.out.println(">> " + start + " 번 학생은 팀 없음.");
           }
           start = choice[start];
         } while (next != start);
