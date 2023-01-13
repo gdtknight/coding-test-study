@@ -42,18 +42,20 @@ public class _2606_Virus {
       int end = Integer.parseInt(st.nextToken());
 
       network[start][end] = true;
-
-      if (start == 1) {
-        count += 1;
-        infected[end] = true;
-        stack.push(end);
-      }
+      network[end][start] = true;
     }
+
+    infected[1] = true;
+    stack.push(1);
 
     while (!stack.isEmpty()) {
       int start = stack.pop();
 
       for (int end = 1; end <= numsOfComputer; end++) {
+        if (start == end) {
+          continue;
+        }
+
         if (network[start][end] && !infected[end]) {
           count += 1;
           infected[end] = true;
