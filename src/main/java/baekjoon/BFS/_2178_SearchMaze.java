@@ -21,10 +21,10 @@ public class _2178_SearchMaze {
   static Queue<SearchPos> fireHist;
 
   public static void main(String[] args) throws IOException {
-    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
+    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase";
     String packagePath = "/baekjoon/BFS";
     BufferedReader br = new BufferedReader(new InputStreamReader(
-        new FileInputStream(filePathRoot + packagePath + "/_2178_TestCase")));
+        new FileInputStream(filePathRoot + packagePath + "/2178")));
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     StringTokenizer st = new StringTokenizer(br.readLine());
     height = Integer.parseInt(st.nextToken());

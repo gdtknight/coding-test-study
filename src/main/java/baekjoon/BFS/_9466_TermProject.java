@@ -16,10 +16,10 @@ public class _9466_TermProject {
   static Queue<Integer> queue = new LinkedList<>();
 
   public static void main(String[] args) throws IOException {
-    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
+    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase";
     String packagePath = "/baekjoon/BFS";
     BufferedReader br = new BufferedReader(new InputStreamReader(
-        new FileInputStream(filePathRoot + packagePath + "/_9466_TestCase")));
+        new FileInputStream(filePathRoot + packagePath + "/9466")));
 
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -44,13 +44,13 @@ public class _9466_TermProject {
         if (visited[i]) {
           continue;
         }
+
         visited[i] = true;
 
         int next = choice[i];
-        int pre = next;
+
         while (!visited[next]) {
           visited[next] = true;
-          pre = next;
           next = choice[next];
         }
 
@@ -59,7 +59,6 @@ public class _9466_TermProject {
           cnt += 1;
           start = choice[start];
         }
-
       }
 
       System.out.println(cnt);

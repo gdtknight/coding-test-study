@@ -18,10 +18,10 @@ public class _1012_OrganicCabbage {
   static Queue<CabbagePos> queue;
 
   public static void main(String[] args) throws IOException {
-    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
+    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase";
     String packagePath = "/baekjoon/BFS";
     BufferedReader br = new BufferedReader(new InputStreamReader(
-        new FileInputStream(filePathRoot + packagePath + "/_1012_TestCase")));
+        new FileInputStream(filePathRoot + packagePath + "/1012")));
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     int numsOfTestCase = Integer.parseInt(br.readLine());

@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.StringTokenizer;
 
 public class _10026_ColorWeakness {
   static int N;
@@ -22,10 +21,11 @@ public class _10026_ColorWeakness {
   static Queue<ColorPos> queue;
 
   public static void main(String[] args) throws IOException {
-    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
+    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase";
     String packagePath = "/baekjoon/BFS";
     BufferedReader br = new BufferedReader(new InputStreamReader(
-        new FileInputStream(filePathRoot + packagePath + "/_10026_TestCase")));
+        new FileInputStream(filePathRoot + packagePath + "/10026")));
+
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     N = Integer.parseInt(br.readLine());

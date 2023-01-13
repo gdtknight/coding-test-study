@@ -20,10 +20,10 @@ public class _2206_WallMaze {
   static int M;
 
   public static void main(String[] args) throws IOException {
-    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
+    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase";
     String packagePath = "/baekjoon/BFS";
     BufferedReader br = new BufferedReader(new InputStreamReader(
-        new FileInputStream(filePathRoot + packagePath + "/_2206_TestCase")));
+        new FileInputStream(filePathRoot + packagePath + "/2206")));
 
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 

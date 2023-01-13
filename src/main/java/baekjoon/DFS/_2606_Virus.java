@@ -17,10 +17,10 @@ public class _2606_Virus {
   };
 
   public static void main(String[] args) throws IOException {
-    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
+    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase";
     String packagePath = "/baekjoon/DFS";
     BufferedReader br = new BufferedReader(new InputStreamReader(
-        new FileInputStream(filePathRoot + packagePath + "/_2606_TestCase")));
+        new FileInputStream(filePathRoot + packagePath + "/2606")));
 
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 

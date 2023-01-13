@@ -16,10 +16,10 @@ public class _1697_HideAndSeek {
   static int[] distance = new int[100_001];
 
   public static void main(String[] args) throws IOException {
-    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
+    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase";
     String packagePath = "/baekjoon/BFS";
     BufferedReader br = new BufferedReader(new InputStreamReader(
-        new FileInputStream(filePathRoot + packagePath + "/_1697_TestCase")));
+        new FileInputStream(filePathRoot + packagePath + "/1697")));
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     StringTokenizer st = new StringTokenizer(br.readLine());

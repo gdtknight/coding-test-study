@@ -25,10 +25,11 @@ public class _7569_TomatoBox {
   };
 
   public static void main(String[] args) throws IOException {
-    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
+    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase";
     String packagePath = "/baekjoon/BFS";
     BufferedReader br = new BufferedReader(new InputStreamReader(
-        new FileInputStream(filePathRoot + packagePath + "/_7569_TestCase")));
+        new FileInputStream(filePathRoot + packagePath + "/7569")));
+
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     StringTokenizer st = new StringTokenizer(br.readLine());
