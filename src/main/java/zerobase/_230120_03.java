@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Stack;
+import java.util.StringTokenizer;
 
 public class _230120_03 {
   public static void main(String[] args) throws IOException {
@@ -11,63 +13,93 @@ public class _230120_03 {
     String packagePath = "/zerobase";
     BufferedReader br = new BufferedReader(new InputStreamReader(
         new FileInputStream(filePathRoot + packagePath + "/230120_03")));
-    int N = Integer.parseInt(br.readLine());
+
+    StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+
+    int N = Integer.parseInt(st.nextToken());
+    int M = Integer.parseInt(st.nextToken());
+
+    int[][] maze = new int[N][M];
+
     for (int n = 0; n < N; n++) {
-      String s = br.readLine().stripLeading().replaceAll(" ", "").toLowerCase();
-      System.out.println(answer(s));
+      String line = br.readLine();
+
+      for (int m = 0; m < M; m++) {
+        maze[n][m] = line.charAt(m);
+      }
 
     }
 
+    System.out.println(answer(maze));
+
+    br.close();
   }
 
-  public static int answer(String str) {
-    String s = str.stripLeading().replaceAll(" ", "").toLowerCase();
-    // boolean isMinus = s.charAt(0) == '-' ? true : false;
+  public static int answer(int[][] maze) {
+    int[][] dirs = {
+        { 1, 0 },
+        { -1, 0 },
+        { 0, 1 },
+        { 0, -1 }
+    };
 
-    System.out.println(s);
-    int startIdx = 0;
-    while (!('0' <= s.charAt(startIdx) && s.charAt(startIdx) <= '9')) {
-      startIdx++;
-    }
-    String s1 = s.substring(0, startIdx);
-    System.out.println("s1 : " + s1);
+    Stack<Pos> stack = new Stack<>();
 
-    boolean isMinus = s1.contains("-") ? true : false;
-    s = s.substring(startIdx);
-    System.out.println("s2 : " + s);
-    System.out.println("isMinus ? " + isMinus);
+    maze[0][0] = 1;
+    stack.push(new Pos(0, 0));
 
-    int idx = 0;
+    while (!stack.isEmpty()) {
+      Pos cur = stack.pop();
 
-    for (int i = 0; i < s.length(); i++) {
-      if ('0' <= s.charAt(i) && s.charAt(i) <= '9') {
-        continue;
-      } else {
-        idx = i;
-        break;
+      int curX = cur.getX();
+      int curY = cur.getY();
+      int turn = maze[curX][curY];
+
+      boolean day = ((maze[curX][curY] - 1) / 5) % 2 == 0 ? true : false;
+
+      for (int i = 0; i < dirs.length; i++) {
+        int nextX = curX + dirs[i][0];
+        int nextY = curY + dirs[i][1];
+
+        if (nextX < 0 || nextY < 0 || nextX >= maze.length || nextY >= maze[0].length) {
+          continue;
+        }
+
+        if (day) {
+          maze[nextX][nextY] = turn + 1;
+          stack.push(new Pos(nextX, nextY));
+        } else {
+          if (maze[nextX][nextY] == 2) {
+            maze[curX][curY] += 2;
+            maze[nextX][nextY] = maze[curX][curY] + 1;
+          } else {
+            maze[nextX][nextY] = turn + 1;
+            stack.push(new Pos(nextX, nextY));
+          }
+        }
       }
     }
 
-    Long longNum = Long.parseLong(s.substring(0, idx));
+    return -1;
+  }
 
-    if (!isMinus && longNum < 0) {
-      return Integer.MAX_VALUE;
-    } else if (isMinus && longNum < 0) {
-      return Integer.MIN_VALUE;
-    } else if (isMinus && longNum > 0) {
-      longNum = longNum * (-1);
-      if (longNum <= Integer.MIN_VALUE) {
-        return Integer.MIN_VALUE;
-      }
-    } else if (!isMinus && longNum > 0) {
-      if (longNum >= Integer.MAX_VALUE) {
-        return Integer.MAX_VALUE;
-      } else {
-        return longNum.intValue();
-      }
-    }
+}
 
-    return longNum.intValue();
+class Pos {
+  int x;
+  int y;
+
+  Pos(int x, int y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  int getX() {
+    return x;
+  }
+
+  int getY() {
+    return y;
   }
 
 }
