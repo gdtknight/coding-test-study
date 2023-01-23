@@ -1,102 +1,88 @@
 package programmers;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 public class ZipString {
-  /*
-   *
-   * "aabbaccc" 7
-   * "ababcdcdababcdcd" 9
-   * "abcabcdede" 8
-   * "abcabcabcabcdededededede" 14
-   * "xababcdcdababcdcd" 17
-   *
-   */
+
   public static void main(String[] args) {
+    /**
+     * "aabbaccc" 7
+     * "ababcdcdababcdcd" 9
+     * "abcabcdede" 8
+     * "abcabcabcabcdededededede" 14
+     * "xababcdcdababcdcd" 17
+     */
+    String origin = "abcabcabcabcdededededede";
 
-    String origin = "aabbaccc";
-
-    solution(origin);
-
+    System.out.println(solution(origin));
   }
 
   public static int solution(String origin) {
-    System.out.println("Start string : " + origin);
+    int answer = Integer.MAX_VALUE;
 
-    Set<String> set = new HashSet<>();
+    // 입력 문자열의 길이가 1일 경우 압축 불가능
+    if (origin.length() == 1) {
+      return origin.length();
+    }
+
+    // 압축된 문자열 저장을 위한 StringBuilder
     StringBuilder sb = null;
 
-    for (int i = 1; i < origin.length(); i++) {
+    // len -> 압축하고자 하는 길이. 문자열 길이의 절반보다 크면 압축이 불가능하다.
+    for (int len = 1; len <= origin.length() / 2; len++) {
       sb = new StringBuilder();
 
-      String target = origin;
-      String prefix = origin.substring(0, i);
+      // [ 탐색할 인덱스의 범위 ]
 
-      System.out.println("Target : " + target + ", prefix : " + prefix);
+      // ooooooooooooo => 압축하고자 하는 길이가 2일 때
+      // _________^___ => 이 부분까지만 탐색하면 된다.
 
-      String[] result = zip(target, prefix);
+      // 인덱스가 이 부분을 넘어설 경우 남은 부분들은 StringBuilder에 추가한다.
 
-      System.out.println("result[0]: " + result[0] + ", result[1]: " + result[1]);
+      // 문자열의 처음부터 탐색
+      int idx = 0;
 
-      sb.append(result[0]);
+      while (idx <= origin.length() - len * 2) {
 
-      recursive(result[1], set, sb);
+        String target = origin.substring(idx, origin.length());
+        String prefix = origin.substring(idx, idx + len);
+
+        int repeatedCnt = repeatCnt(target, prefix);
+
+        if (repeatedCnt > 1) {
+          sb.append(repeatedCnt);
+          sb.append(prefix);
+        } else {
+          sb.append(prefix);
+        }
+
+        // 무조건 문자열의 시작부터 len만큼 자르기 때문에
+        // 체크해야 할 인덱스는 len의 배수만큼 증가한다.
+        idx = idx + len * repeatedCnt;
+
+        // 탐색 범위를 벗어날 경우 남은 부분 빌더에 추가하고 마무리.
+        if (idx > origin.length() - len * 2) {
+          sb.append(origin.substring(idx, origin.length()));
+        }
+      }
+
+      if (sb.length() < answer) {
+        answer = sb.length();
+      }
     }
 
-    set.stream().forEach(str -> {
-      System.out.println(str);
-    });
-
-    return -1;
+    return answer;
   }
 
-  public static void recursive(String origin, Set<String> set, StringBuilder sb) {
-
-    if ("".equals(origin)) {
-      set.add(sb.toString());
-      return;
-    }
-    if (origin.length() == 1) {
-      set.add(sb.append(origin).toString());
-      return;
-    }
-
-    for (int i = 1; i < origin.length() + 1; i++) {
-      StringBuilder newSb = new StringBuilder(sb);
-      String target = origin;
-      String prefix = origin.substring(0, i);
-
-      String[] result = zip(target, prefix);
-
-      // System.out.println("target : " + target + ", prefix : " + prefix);
-      // System.out.println(Arrays.toString(result));
-
-      newSb.append(result[0]);
-      recursive(result[1], set, newSb);
-
-      // sb = sb.append(recursive(result[1]));
-    }
-
-    return;
-  }
-
-  public static String[] zip(String target, String prefix) {
+  public static int repeatCnt(String target, String prefix) {
     int cnt = 0;
 
-    while (target.startsWith(prefix)) {
+    String remain = target;
+
+    while (remain.startsWith(prefix)) {
       cnt += 1;
-      target = target.substring(prefix.length());
+      remain = remain.substring(prefix.length());
     }
 
-    if (cnt > 1) {
-      return new String[] { cnt + prefix, target };
-    } else if (cnt == 1) {
-      return new String[] { prefix, target };
-    } else {
-      return new String[] { target, "" };
-    }
+    return cnt;
   }
 
 }
