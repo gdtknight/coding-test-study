@@ -38,12 +38,9 @@ public class _2204_Dobi {
             return 1;
           }
         }
+        // String.CASE_INSENSITIVE_ORDER;
 
-        return s1.length() < s2.length()
-            ? 1
-            : s1.length() > s2.length()
-                ? -1
-                : 0;
+        return 0;
       });
 
       System.out.println(Arrays.toString(words));
