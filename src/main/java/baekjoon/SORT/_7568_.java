@@ -58,11 +58,11 @@ public class _7568_ {
 
     map.put(list.get(list.size() - 1), 1);
 
-    for (Size size : list) {
-      System.out.println(size + " : " + map.get(size));
-    }
+    // for (Size size : list) {
+    // System.out.println(size + " : " + map.get(size));
+    // }
 
-    System.out.println("답 출력");
+    // System.out.println("답 출력");
     for (Size size : original) {
       System.out.print(map.get(size) + " ");
     }
