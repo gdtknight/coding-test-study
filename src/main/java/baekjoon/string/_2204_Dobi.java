@@ -1,4 +1,4 @@
-package baekjoon.STRING;
+package baekjoon.string;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -8,12 +8,16 @@ import java.util.Arrays;
 
 public class _2204_Dobi {
   public static void main(String[] args) throws IOException {
-    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources";
-    String packagePath = "/testcase/baekjoon/STRING";
-    BufferedReader br = new BufferedReader(new InputStreamReader(
-        new FileInputStream(filePathRoot + packagePath + "/2204")));
-
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    //
+    String rootPath = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase/";
+    Object o = new Object() {
+    };
+    String className = o.getClass().getEnclosingClass().getName();
+    String fullPath = rootPath + "/" + className.replaceAll("_", "").replaceAll("[.]", "/");
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullPath)));
+    //
 
     int n = Integer.parseInt(br.readLine());
 

@@ -1,4 +1,4 @@
-package baekjoon.DFS;
+package baekjoon.dfs;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -17,12 +17,16 @@ public class _2606_Virus {
   };
 
   public static void main(String[] args) throws IOException {
-    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase";
-    String packagePath = "/baekjoon/DFS";
-    BufferedReader br = new BufferedReader(new InputStreamReader(
-        new FileInputStream(filePathRoot + packagePath + "/2606")));
-
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    //
+    String rootPath = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase/";
+    Object o = new Object() {
+    };
+    String className = o.getClass().getEnclosingClass().getName();
+    String fullPath = rootPath + "/" + className.replaceAll("_", "").replaceAll("[.]", "/");
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullPath)));
+    //
 
     int numsOfComputer = Integer.parseInt(br.readLine());
     int numsOfpair = Integer.parseInt(br.readLine());

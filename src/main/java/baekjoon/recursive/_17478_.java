@@ -2,10 +2,9 @@
 package baekjoon.recursive;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.StringTokenizer;
+import java.io.InputStreamReader;
 
 public class _17478_ {
 
@@ -35,13 +34,14 @@ public class _17478_ {
     };
     String className = o.getClass().getEnclosingClass().getName();
     String fullPath = rootPath + "/" + className.replaceAll("_", "").replaceAll("[.]", "/");
-    BufferedReader br = new BufferedReader(new FileReader(new File(fullPath)));
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullPath)));
     //
 
     System.out.println("어느 한 컴퓨터공학과 학생이 유명한 교수님을 찾아가 물었다.");
     N = Integer.parseInt(br.readLine());
 
     recursiveChat(0);
+    br.close();
   }
 
   public static void recursiveChat(int n) {

@@ -1,9 +1,9 @@
 package baekjoon;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
   public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -15,9 +15,10 @@ public class Main {
     };
     String className = o.getClass().getEnclosingClass().getName();
     String fullPath = rootPath + "/" + className.replaceAll("_", "").replaceAll("[.]", "/");
-    BufferedReader br = new BufferedReader(new FileReader(new File(fullPath)));
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullPath)));
     //
 
+    br.close();
   }
 
 }

@@ -1,10 +1,9 @@
-
-package baekjoon.SORT;
+package baekjoon.sorting;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,15 +15,15 @@ public class _7568_ {
 
   public static void main(String[] args) throws IOException {
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    String rootPath = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase/";
-    String className = new Object() {
-    }
-        .getClass()
-        .getEnclosingClass()
-        .getName();
 
-    BufferedReader br = new BufferedReader(new FileReader(
-        new File(rootPath + "/" + className.replaceAll("_", "").replaceAll("[.]", "/"))));
+    //
+    String rootPath = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase/";
+    Object o = new Object() {
+    };
+    String className = o.getClass().getEnclosingClass().getName();
+    String fullPath = rootPath + "/" + className.replaceAll("_", "").replaceAll("[.]", "/");
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullPath)));
+    //
 
     int N = Integer.parseInt(br.readLine());
 
@@ -89,7 +88,6 @@ class Size implements Comparable<Size> {
 
     Size other = (Size) o;
 
-    // TODO Auto-generated method stub
     if (this.weight > other.weight && this.height > other.height) {
       return 1;
     } else if (this.weight < other.weight && this.height < other.height) {

@@ -1,4 +1,4 @@
-package baekjoon.BFS;
+package baekjoon.bfs;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -16,12 +16,16 @@ public class _9466_TermProject {
   static Queue<Integer> queue = new LinkedList<>();
 
   public static void main(String[] args) throws IOException {
-    String filePathRoot = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase";
-    String packagePath = "/baekjoon/BFS";
-    BufferedReader br = new BufferedReader(new InputStreamReader(
-        new FileInputStream(filePathRoot + packagePath + "/9466")));
-
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    //
+    String rootPath = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase/";
+    Object o = new Object() {
+    };
+    String className = o.getClass().getEnclosingClass().getName();
+    String fullPath = rootPath + "/" + className.replaceAll("_", "").replaceAll("[.]", "/");
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullPath)));
+    //
 
     numsOfCase = Integer.parseInt(br.readLine());
 

@@ -1,8 +1,7 @@
-package baekjoon.QUEUE;
+package baekjoon.queue;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
@@ -10,15 +9,15 @@ import java.util.StringTokenizer;
 public class _2346_ {
   public static void main(String[] args) throws IOException, ClassNotFoundException {
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    String rootPath = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase/";
-    String className = new Object() {
-    }
-        .getClass()
-        .getEnclosingClass()
-        .getName();
 
-    BufferedReader br = new BufferedReader(new FileReader(
-        new File(rootPath + "/" + className.replaceAll("_", "").replaceAll("[.]", "/"))));
+    //
+    String rootPath = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase/";
+    Object o = new Object() {
+    };
+    String className = o.getClass().getEnclosingClass().getName();
+    String fullPath = rootPath + "/" + className.replaceAll("_", "").replaceAll("[.]", "/");
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullPath)));
+    //
 
     int N = Integer.parseInt(br.readLine());
 

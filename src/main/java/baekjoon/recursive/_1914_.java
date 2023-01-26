@@ -1,9 +1,9 @@
 package baekjoon.recursive;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class _1914_ {
   public static int cnt = 0;
@@ -17,12 +17,13 @@ public class _1914_ {
     };
     String className = o.getClass().getEnclosingClass().getName();
     String fullPath = rootPath + "/" + className.replaceAll("_", "").replaceAll("[.]", "/");
-    BufferedReader br = new BufferedReader(new FileReader(new File(fullPath)));
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullPath)));
     //
 
     int N = Integer.parseInt(br.readLine());
 
     hanoi(N, 1, 3, 2);
+    br.close();
   }
 
   public static void hanoi(int n, int from, int to, int by) {
