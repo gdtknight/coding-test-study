@@ -7,8 +7,6 @@ import java.io.InputStreamReader;
 
 public class Main {
   public static void main(String[] args) throws IOException, ClassNotFoundException {
-    // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
     //
     String rootPath = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase/";
     Object o = new Object() {
@@ -17,6 +15,7 @@ public class Main {
     String fullPath = rootPath + "/" + className.replaceAll("_", "").replaceAll("[.]", "/");
     BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullPath)));
     //
+    // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     br.close();
   }
