@@ -25,31 +25,21 @@ public class _2839_ {
   }
 
   public static int solution(int N) {
-    if (N < 3 || N == 4) {
-      return -1;
-    } else if (N == 3 || N == 5) {
-      return 1;
-    }
 
     int fiveCnt = N / 5;
-    int threeCnt = 0;
-    int remain = N % 5;
+    int threeCnt = (N - fiveCnt * 5) / 3;
 
-    if (remain == 0) {
-      return fiveCnt;
-    } else if (remain % 3 == 0) {
-      return fiveCnt + remain / 3;
-    }
+    while (fiveCnt > 0) {
 
-    while (N - fiveCnt * 5 - threeCnt * 3 > 0) {
-      fiveCnt = fiveCnt > 0 ? fiveCnt - 1 : 0;
-      threeCnt++;
       if ((N - fiveCnt * 5) % 3 == 0) {
-        return fiveCnt + (N - fiveCnt * 5) / 3;
+        return fiveCnt + threeCnt;
       }
+
+      fiveCnt -= 1;
+      threeCnt = (N - fiveCnt * 5) / 3;
     }
 
-    return -1;
+    return (N - fiveCnt * 5) % 3 == 0 ? threeCnt : -1;
   }
 
 }
