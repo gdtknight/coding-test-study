@@ -1,25 +1,30 @@
 package baekjoon.binarysearch;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class _1920_ {
+import baekjoon.Problem;
 
-  public static void main(String[] args) throws IOException, ClassNotFoundException {
-    // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+public class _1920_ implements Problem {
 
-    //
-    String rootPath = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase/";
-    Object o = new Object() {
-    };
-    String className = o.getClass().getEnclosingClass().getName();
-    String fullPath = rootPath + "/" + className.replaceAll("_", "").replaceAll("[.]", "/");
-    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullPath)));
-    //
+  public void solution(String[] args) throws Exception {
+    String filePath = this.getClass()
+        .getName()
+        .replaceAll("_", "")
+        .replaceAll("\\.", "/");
+
+    System.out.println(filePath);
+
+    File file = new File(this.getClass()
+        .getClassLoader()
+        .getResource(filePath)
+        .getPath());
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 
     // 초기화 단계
     int N = Integer.parseInt(br.readLine());

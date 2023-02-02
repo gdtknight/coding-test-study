@@ -1,4 +1,4 @@
-package stream;
+package practice.stream;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,8 +8,13 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class StreamExample {
-  public static void main(String[] args) {
+import practice.Problem;
+
+public class StreamExample implements Problem {
+  public void solution(String[] args) throws Exception {
+  }
+
+  public static void exampleFunction(String[] args) {
     List<String> names = Arrays.asList("Peter", "Martin", "John", "Vijay", "Arthur");
 
     Set<String> namesSet = new HashSet<>(names);

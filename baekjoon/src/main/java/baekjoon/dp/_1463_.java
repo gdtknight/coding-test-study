@@ -1,24 +1,31 @@
 package baekjoon.dp;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.stream.IntStream;
 
-public class _1463_ {
+import baekjoon.Problem;
 
-  public static void main(String[] args) throws IOException, ClassNotFoundException {
-    //
-    String rootPath = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase/";
-    Object o = new Object() {
-    };
-    String className = o.getClass().getEnclosingClass().getName();
-    String fullPath = rootPath + "/" + className.replaceAll("_", "").replaceAll("[.]", "/");
-    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullPath)));
-    //
+public class _1463_ implements Problem {
+
+  public void solution(String[] args) throws Exception {
+
+    String filePath = this.getClass()
+        .getName()
+        .replaceAll("_", "")
+        .replaceAll("\\.", "/");
+
+    System.out.println(filePath);
+
+    File file = new File(this.getClass()
+        .getClassLoader()
+        .getResource(filePath)
+        .getPath());
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
     int N = Integer.parseInt(br.readLine());
     int[] useCnt = new int[N + 1];
     useCnt[2] = 1;

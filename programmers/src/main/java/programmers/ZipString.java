@@ -1,21 +1,32 @@
 package programmers;
 
-public class ZipString {
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
-  public static void main(String[] args) {
-    /**
-     * "aabbaccc" 7
-     * "ababcdcdababcdcd" 9
-     * "abcabcdede" 8
-     * "abcabcabcabcdededededede" 14
-     * "xababcdcdababcdcd" 17
-     */
-    String origin = "abcabcabcabcdededededede";
+public class ZipString implements Problem {
+  public void solution(String[] args) throws Exception {
 
-    System.out.println(solution(origin));
+    String filePath = this.getClass()
+        .getName()
+        .replaceAll("_", "")
+        .replaceAll("\\.", "/");
+
+    System.out.println(filePath);
+
+    File file = new File(this.getClass()
+        .getClassLoader()
+        .getResource(filePath)
+        .getPath());
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+    // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
   }
 
-  public static int solution(String origin) {
+  public static int solution() {
+    String origin = "abcabcabcabcdededededede";
     int answer = Integer.MAX_VALUE;
 
     // 입력 문자열의 길이가 1일 경우 압축 불가능

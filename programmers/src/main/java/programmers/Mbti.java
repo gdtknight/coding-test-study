@@ -1,12 +1,29 @@
 package programmers;
 
-import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
-public class Mbti {
+public class Mbti implements Problem {
+  public void solution(String[] args) throws Exception {
 
-}
+    String filePath = this.getClass()
+        .getName()
+        .replaceAll("_", "")
+        .replaceAll("\\.", "/");
 
-class Solution {
+    System.out.println(filePath);
+
+    File file = new File(this.getClass()
+        .getClassLoader()
+        .getResource(filePath)
+        .getPath());
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+    // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+  }
 
   public String solution(String[] survey, int[] choices) {
 

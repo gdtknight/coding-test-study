@@ -1,41 +1,30 @@
 package programmers;
 
-public class RecommendNewId {
-  public static void main(String[] args) {
-    /**
-     * no new_id result
-     * 예1 "...!@BaT#*..y.abcdefghijklm" "bat.y.abcdefghi"
-     * 예2 "z-+.^." "z--"
-     * 예3 "=.=" "aaa"
-     * 예4 "123_.def" "123_.def"
-     * 예5 "abcdefghijklmn.p" "abcdefghijklmn"
-     */
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
-    String case1 = "...!@BaT#*..y.abcdefghijklm";
-    String case2 = "z-+.^.";
-    String case3 = "=.=";
-    String case4 = "123_.def";
-    String case5 = "abcdefghijklmn.p";
+public class RecommendNewId implements Problem {
+  public void solution(String[] args) throws Exception {
 
-    String answer1 = "bat.y.abcdefghi";
-    String answer2 = "z--";
-    String answer3 = "aaa";
-    String answer4 = "123_.def";
-    String answer5 = "abcdefghijklmn";
+    String filePath = this.getClass()
+        .getName()
+        .replaceAll("_", "")
+        .replaceAll("\\.", "/");
 
-    Solution solution = new Solution();
+    System.out.println(filePath);
 
-    System.out.println("Case1: " + solution.solution(case1).equals(answer1));
-    System.out.println("Case2: " + solution.solution(case2).equals(answer2));
-    System.out.println("Case3: " + solution.solution(case3).equals(answer3));
-    System.out.println("Case4: " + solution.solution(case4).equals(answer4));
-    System.out.println("Case5: " + solution.solution(case5).equals(answer5));
+    File file = new File(this.getClass()
+        .getClassLoader()
+        .getResource(filePath)
+        .getPath());
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+    // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
   }
 
-}
-
-class Solution {
   public String solution(String new_id) {
     System.out.println("시작 문자열 : " + new_id);
 

@@ -1,23 +1,28 @@
 package baekjoon;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import baekjoon.pqueue._11279_;
 
 public class Main {
-  public static void main(String[] args) throws IOException, ClassNotFoundException {
-    //
-    String rootPath = "/home/ubuntu/workspace/coding-test-study/src/main/resources/testcase/";
-    Object o = new Object() {
-    };
-    String className = o.getClass().getEnclosingClass().getName();
-    String fullPath = rootPath + "/" + className.replaceAll("_", "").replaceAll("[.]", "/");
-    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fullPath)));
-    //
-    // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    br.close();
+  public static void main(String[] args) throws Exception {
+
+    Problem problem = new _11279_();
+
+    Logger log = LoggerFactory.getLogger(Main.class);
+
+    log.info("Thread {} started", Thread.currentThread().getName());
+
+    String[] pathFrag = problem.getClass().getName().replaceAll("_", "").split("\\.");
+
+    log.info("Category: {}", pathFrag[pathFrag.length - 2]);
+    log.info("Problem No.{}", pathFrag[pathFrag.length - 1]);
+    log.info("Start solving problem\n");
+
+    problem.solution(args);
+
   }
 
 }
