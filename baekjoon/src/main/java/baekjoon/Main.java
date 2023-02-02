@@ -3,13 +3,14 @@ package baekjoon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import baekjoon.pqueue._11279_;
+import baekjoon.common.Problem;
+import baekjoon.twopointer._2470_;
 
 public class Main {
 
   public static void main(String[] args) throws Exception {
 
-    Problem problem = new _11279_();
+    Problem problem = new _2470_();
 
     Logger log = LoggerFactory.getLogger(Main.class);
 
