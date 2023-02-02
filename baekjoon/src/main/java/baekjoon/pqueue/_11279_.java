@@ -1,6 +1,7 @@
 package baekjoon.pqueue;
 
 import java.io.BufferedReader;
+import java.util.PriorityQueue;
 
 import baekjoon.Problem;
 import baekjoon.common.Initialization;
@@ -14,12 +15,23 @@ public class _11279_ implements Problem {
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     int N = Integer.parseInt(br.readLine());
+    PriorityQueue<Integer> pQueue = new PriorityQueue<>((a, b) -> a > b ? -1 : 1);
 
     for (int i = 0; i < N; i++) {
       int num = Integer.parseInt(br.readLine());
-      System.out.println(num);
+      if (num == 0) {
+        if (pQueue.isEmpty()) {
+          System.out.println(0);
+        } else {
+          System.out.println(pQueue.poll());
+        }
+
+      } else {
+        pQueue.offer(num);
+      }
     }
 
+    br.close();
   }
 
 }
