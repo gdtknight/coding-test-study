@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
-import baekjoon.Problem;
+import baekjoon.common.Problem;
 
 public class _9095_ implements Problem {
   public void solution(String[] args) throws Exception {

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import baekjoon.Problem;
+import baekjoon.common.Problem;
 
 public class _7568_ implements Problem {
 

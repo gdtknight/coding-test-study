@@ -3,8 +3,8 @@ package baekjoon.pqueue;
 import java.io.BufferedReader;
 import java.util.PriorityQueue;
 
-import baekjoon.Problem;
 import baekjoon.common.Initialization;
+import baekjoon.common.Problem;
 
 public class _11279_ implements Problem {
 

@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-import baekjoon.Problem;
+import baekjoon.common.Problem;
 
 public class _2667_ implements Problem {
 

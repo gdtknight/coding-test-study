@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
-import baekjoon.Problem;
+import baekjoon.common.Problem;
 
 public class _1003_ implements Problem {
   public void solution(String[] args) throws Exception {

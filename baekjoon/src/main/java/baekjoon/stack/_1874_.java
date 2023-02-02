@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-import baekjoon.Problem;
+import baekjoon.common.Problem;
 
 public class _1874_ implements Problem {
 

@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import baekjoon.Problem;
+import baekjoon.common.Problem;
 
 public class _10026_ implements Problem {
   static int N;
