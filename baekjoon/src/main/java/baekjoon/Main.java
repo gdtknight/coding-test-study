@@ -4,13 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import baekjoon.common.Problem;
-import baekjoon.dp._9461_;
+import baekjoon.sorting._11651_;
 
 public class Main {
 
   public static void main(String[] args) throws Exception {
 
-    Problem problem = new _9461_();
+    Problem problem = new _11651_();
 
     Logger log = LoggerFactory.getLogger(Main.class);
 
