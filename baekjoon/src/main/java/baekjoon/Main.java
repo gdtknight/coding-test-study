@@ -4,13 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import baekjoon.common.Problem;
-import baekjoon.sorting._11651_;
+import baekjoon.hash._9375_;
 
 public class Main {
 
   public static void main(String[] args) throws Exception {
 
-    Problem problem = new _11651_();
+    Problem problem = new _9375_();
 
     Logger log = LoggerFactory.getLogger(Main.class);
 
