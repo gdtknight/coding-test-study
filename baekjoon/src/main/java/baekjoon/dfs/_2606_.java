@@ -1,13 +1,11 @@
 package baekjoon.dfs;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
-import baekjoon.common.Problem;
+import common.Initialization;
+import common.Problem;
 
 public class _2606_ implements Problem {
 
@@ -20,19 +18,8 @@ public class _2606_ implements Problem {
 
   public void solution(String[] args) throws Exception {
 
-    String filePath = this.getClass()
-        .getName()
-        .replaceAll("_", "")
-        .replaceAll("\\.", "/");
-
-    System.out.println(filePath);
-
-    File file = new File(this.getClass()
-        .getClassLoader()
-        .getResource(filePath)
-        .getPath());
-
-    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+    BufferedReader br = Initialization.getBufferedReaderFromClass(this);
+    // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     int numsOfComputer = Integer.parseInt(br.readLine());
     int numsOfpair = Integer.parseInt(br.readLine());

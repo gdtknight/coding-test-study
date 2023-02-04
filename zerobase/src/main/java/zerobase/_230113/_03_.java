@@ -1,14 +1,12 @@
 package zerobase._230113;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.Stack;
 
-import zerobase.Problem;
+import common.Initialization;
+import common.Problem;
 
-public class _03 implements Problem {
+public class _03_ implements Problem {
 
   // 0 < N <= 100
   // 0 < edges.length <= 1000
@@ -32,22 +30,8 @@ public class _03 implements Problem {
   };
 
   public void solution(String[] args) throws Exception {
-
-    String filePath = this.getClass()
-        .getName()
-        .replaceAll("_", "")
-        .replaceAll("\\.", "/");
-
-    System.out.println(filePath);
-
-    File file = new File(this.getClass()
-        .getClassLoader()
-        .getResource(filePath)
-        .getPath());
-
-    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+    BufferedReader br = Initialization.getBufferedReaderFromClass(this);
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
   }
 
   public int answer(int N, int[][] edges) {

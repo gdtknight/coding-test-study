@@ -1,11 +1,9 @@
 package baekjoon.dp;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.Stack;
 
-import baekjoon.common.Initialization;
-import baekjoon.common.Problem;
+import common.Initialization;
+import common.Problem;
 
 public class _1904_ implements Problem {
 

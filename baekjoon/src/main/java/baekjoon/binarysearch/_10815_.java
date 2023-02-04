@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-import baekjoon.common.Problem;
+import common.Problem;
 
 public class _10815_ implements Problem {
 

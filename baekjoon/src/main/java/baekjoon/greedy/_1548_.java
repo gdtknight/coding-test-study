@@ -1,8 +1,11 @@
-package baekjoon.common;
+package baekjoon.greedy;
 
 import java.io.BufferedReader;
 
-public class Base implements Problem {
+import common.Initialization;
+import common.Problem;
+
+public class _1548_ implements Problem {
 
   public void solution(String[] args) throws Exception {
 

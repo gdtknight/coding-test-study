@@ -1,9 +1,6 @@
-package baekjoon.pqueue;
+package common;
 
 import java.io.BufferedReader;
-
-import baekjoon.common.Initialization;
-import baekjoon.common.Problem;
 
 public class Base implements Problem {
 

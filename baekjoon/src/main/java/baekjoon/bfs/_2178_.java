@@ -9,7 +9,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import baekjoon.common.Problem;
+import common.Problem;
 
 public class _2178_ implements Problem {
 

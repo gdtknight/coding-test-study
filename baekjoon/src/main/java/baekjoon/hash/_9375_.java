@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import baekjoon.common.Initialization;
-import baekjoon.common.Problem;
+import common.Initialization;
+import common.Problem;
 
 public class _9375_ implements Problem {
 
@@ -21,6 +21,7 @@ public class _9375_ implements Problem {
     int numsOfCase = Integer.parseInt(br.readLine());
 
     for (int i = 0; i < numsOfCase; i++) {
+      System.out.println("TestCase " + i);
       Map<String, Set<String>> map = new HashMap<>();
 
       int numsOfLook = Integer.parseInt(br.readLine());
@@ -33,27 +34,36 @@ public class _9375_ implements Problem {
         map.put(look[1], names);
       }
 
-      if (map.keySet().size() == 1) {
-        for (Entry<String, Set<String>> entry : map.entrySet()) {
-          // System.out.println(entry.getKey());
-          // System.out.println(Arrays.toString(entry.getValue().toArray()));
-        }
-        System.out.println(map.get(map.keySet().iterator().next()).size());
-      } else {
+      int sum = 0;
 
-        int result = 0;
-        int gop = 1;
+      String[] keyList = (String[]) map.keySet().toArray();
 
-        for (Entry<String, Set<String>> entry : map.entrySet()) {
-          // System.out.println(entry.getKey());
-          // System.out.println(Arrays.toString(entry.getValue().toArray()));
-          result += entry.getValue().size();
-          gop *= entry.getValue().size();
-        }
-
-        System.out.println(result + gop);
+      for (Entry<String, Set<String>> entry : map.entrySet()) {
+        sum += entry.getValue().size();
+        System.out.println(entry.getKey() + " : " + Arrays.toString(entry.getValue().toArray()));
       }
 
+      System.out.println();
+
+      boolean[] visitedKey = new boolean[keyList.length];
+
+      for (int r = 1; r <= map.entrySet().size(); r++) {
+        int depth = 0;
+
+        while (true) {
+          if (depth == r) {
+            for (int idx = 0; idx < keyList.length; idx++) {
+              if (visitedKey[idx]) {
+                System.out.println(keyList[idx]);
+              }
+
+            }
+
+          }
+
+        }
+
+      }
     }
 
     // Your code

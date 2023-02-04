@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-import baekjoon.common.Problem;
+import common.Problem;
 
 public class _4179_ implements Problem {
   static FirePos[] dirs = new FirePos[] {

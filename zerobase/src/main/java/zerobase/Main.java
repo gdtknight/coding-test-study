@@ -3,12 +3,13 @@ package zerobase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zerobase._230120._01;
+import common.Problem;
+import zerobase._230202._02_;
 
 public class Main {
 
   public static void main(String[] args) throws Exception {
-    Problem problem = new _01();
+    Problem problem = new _02_();
 
     Logger log = LoggerFactory.getLogger(Main.class);
     log.info("Thread {} started", Thread.currentThread().getName());

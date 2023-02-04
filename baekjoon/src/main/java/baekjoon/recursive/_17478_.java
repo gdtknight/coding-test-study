@@ -2,9 +2,8 @@
 package baekjoon.recursive;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+
+import common.Initialization;
 
 public class _17478_ {
 
@@ -27,19 +26,7 @@ public class _17478_ {
 
   public void solution(String[] args) throws Exception {
 
-    String filePath = this.getClass()
-        .getName()
-        .replaceAll("_", "")
-        .replaceAll("\\.", "/");
-
-    System.out.println(filePath);
-
-    File file = new File(this.getClass()
-        .getClassLoader()
-        .getResource(filePath)
-        .getPath());
-
-    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+    BufferedReader br = Initialization.getBufferedReaderFromClass(this);
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     System.out.println("어느 한 컴퓨터공학과 학생이 유명한 교수님을 찾아가 물었다.");

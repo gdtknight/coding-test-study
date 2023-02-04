@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-import baekjoon.common.Initialization;
-import baekjoon.common.Problem;
+import common.Initialization;
+import common.Problem;
 
 public class _11651_ implements Problem {
 
