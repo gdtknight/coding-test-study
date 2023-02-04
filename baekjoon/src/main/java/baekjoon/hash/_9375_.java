@@ -1,9 +1,10 @@
 package baekjoon.hash;
 
 import java.io.BufferedReader;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -18,10 +19,11 @@ public class _9375_ implements Problem {
     BufferedReader br = Initialization.getBufferedReaderFromClass(this);
     // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
+    // Your code
     int numsOfCase = Integer.parseInt(br.readLine());
+    List<Map> list = new ArrayList<>();
 
     for (int i = 0; i < numsOfCase; i++) {
-      System.out.println("TestCase " + i);
       Map<String, Set<String>> map = new HashMap<>();
 
       int numsOfLook = Integer.parseInt(br.readLine());
@@ -34,41 +36,71 @@ public class _9375_ implements Problem {
         map.put(look[1], names);
       }
 
-      int sum = 0;
+      if (map.keySet().size() == 1) {
+        System.out.println(map.entrySet().iterator().next().getValue().size());
+      } else {
+        int result = 0;
 
-      String[] keyList = (String[]) map.keySet().toArray();
-
-      for (Entry<String, Set<String>> entry : map.entrySet()) {
-        sum += entry.getValue().size();
-        System.out.println(entry.getKey() + " : " + Arrays.toString(entry.getValue().toArray()));
-      }
-
-      System.out.println();
-
-      boolean[] visitedKey = new boolean[keyList.length];
-
-      for (int r = 1; r <= map.entrySet().size(); r++) {
-        int depth = 0;
-
-        while (true) {
-          if (depth == r) {
-            for (int idx = 0; idx < keyList.length; idx++) {
-              if (visitedKey[idx]) {
-                System.out.println(keyList[idx]);
-              }
-
-            }
-
-          }
-
+        for (Entry<String, Set<String>> entry : map.entrySet()) {
+          result += entry.getValue().size();
         }
 
-      }
-    }
+        String[] keyArr = new String[map.keySet().size()];
+        map.keySet().toArray(keyArr);
 
-    // Your code
+        for (int totalCnt = 2; totalCnt <= keyArr.length; totalCnt++) {
+          result += getCnt(map, keyArr, totalCnt);
+        }
+        System.out.println(result);
+      }
+
+    }
 
     br.close();
   }
 
+  public int getCnt(Map<String, Set<String>> map, String[] keyArr, int totalCnt) {
+    int result = 0;
+    boolean[] selected = new boolean[keyArr.length];
+    List<String[]> list = new ArrayList<>();
+
+    permutation(keyArr, 0, totalCnt, 0, selected, list);
+    for (String[] pair : list) {
+      int sum = 1;
+      for (int i = 0; i < pair.length; i++) {
+        sum *= map.get(pair[i]).size();
+      }
+      result += sum;
+    }
+
+    return result;
+  }
+
+  public void permutation(
+      String[] keyArr,
+      int selectedCnt,
+      int totalCnt,
+      int nextSearchIdx,
+      boolean[] selected,
+      List<String[]> list) {
+
+    if (totalCnt == selectedCnt) {
+      String[] newPair = new String[totalCnt];
+      int idx = 0;
+      for (int i = 0; i < keyArr.length; i++) {
+        if (selected[i]) {
+          newPair[idx++] = keyArr[i];
+        }
+      }
+      list.add(newPair);
+      return;
+    }
+
+    for (int i = nextSearchIdx; i < keyArr.length; i++) {
+      selected[i] = true;
+      permutation(keyArr, selectedCnt + 1, totalCnt, i + 1, selected, list);
+      selected[i] = false;
+    }
+
+  }
 }
