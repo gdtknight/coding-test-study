@@ -3,14 +3,14 @@ package baekjoon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import baekjoon.bruteforce._2798_;
+import baekjoon.bruteforce._2231_;
 import common.Problem;
 
 public class Main {
 
   public static void main(String[] args) throws Exception {
 
-    Problem problem = new _2798_();
+    Problem problem = new _2231_();
 
     Logger log = LoggerFactory.getLogger(Main.class);
 
