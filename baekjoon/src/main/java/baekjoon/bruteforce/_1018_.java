@@ -57,13 +57,13 @@ public class _1018_ implements Problem {
         if (board[i][j] != start) {
           cnt += 1;
         }
-        if (i + 1 < 8 && board[i + 1][j] != neighbor) {
+        if (i + 1 < startX + 8 && board[i + 1][j] != neighbor) {
           cnt += 1;
         }
-        if (j + 1 < 8 && board[i][j + 1] != neighbor) {
+        if (j + 1 < startY + 8 && board[i][j + 1] != neighbor) {
           cnt += 1;
         }
-        if (i + 1 < 8 && j + 1 < 8 && board[i + 1][j + 1] != start) {
+        if (i + 1 < startX + 8 && j + 1 < startY + 8 && board[i + 1][j + 1] != start) {
           cnt += 1;
         }
       }
