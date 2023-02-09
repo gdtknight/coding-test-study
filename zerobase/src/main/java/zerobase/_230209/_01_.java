@@ -1,5 +1,6 @@
 package zerobase._230209;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,71 +16,26 @@ public class _01_ implements Problem {
   }
 
   public int solution(int[] nums) {
-    int max = 0;
 
-    Set<Pair> set = new HashSet<>();
+    int[] max1 = new int[2];
+    int[] max2 = new int[2];
 
-    for (int i = 0; i < nums.length - 1; i++) {
-      for (int j = i + 1; j < nums.length; j++) {
-        if (set.add(new Pair(nums[i], nums[j]))) {
-          if ((nums[i] - 1) * (nums[j] - 1) > max) {
-            max = (nums[i] - 1) * (nums[j] - 1);
-          }
-        }
+    for (int i = 0; i < nums.length; i++) {
+      if (i != max1[0] && nums[i] > max1[1]) {
+        max2[0] = max1[0];
+        max2[1] = max1[1];
+        max1[0] = i;
+        max1[1] = nums[i];
+      } else if (i != max1[0] && nums[i] == max1[1]) {
+        max2[0] = i;
+        max2[1] = nums[i];
       }
     }
+    System.out.println(nums.length);
+    System.out.println(Arrays.toString(max1));
+    System.out.println(Arrays.toString(max2));
 
-    return max;
+    return (max1[1] - 1) * (max2[1] - 1);
   }
 
-  class Pair {
-    int i;
-    int j;
-
-    Pair(int i, int j) {
-      this.i = i;
-      this.j = j;
-    }
-
-    public int getI() {
-      return i;
-    }
-
-    public int getJ() {
-      return j;
-    }
-
-    @Override
-    public int hashCode() {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + getEnclosingInstance().hashCode();
-      result = prime * result + i;
-      result = prime * result + j;
-      return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      if (this == obj)
-        return true;
-      if (obj == null)
-        return false;
-      if (getClass() != obj.getClass())
-        return false;
-      Pair other = (Pair) obj;
-      if (!getEnclosingInstance().equals(other.getEnclosingInstance()))
-        return false;
-      if (i != other.i)
-        return false;
-      if (j != other.j)
-        return false;
-      return true;
-    }
-
-    private _01_ getEnclosingInstance() {
-      return _01_.this;
-    }
-
-  }
 }
