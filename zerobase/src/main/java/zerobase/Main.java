@@ -4,12 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import common.Problem;
-import zerobase._230209._02_;
+import zerobase._230209._01_;
 
 public class Main {
 
   public static void main(String[] args) throws Exception {
-    Problem problem = new _02_();
+    Problem problem = new _01_();
 
     Logger log = LoggerFactory.getLogger(Main.class);
     log.info("Thread {} started", Thread.currentThread().getName());

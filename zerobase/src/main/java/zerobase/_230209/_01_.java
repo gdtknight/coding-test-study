@@ -1,8 +1,6 @@
 package zerobase._230209;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 import common.Problem;
 
@@ -21,17 +19,14 @@ public class _01_ implements Problem {
     int[] max2 = new int[2];
 
     for (int i = 0; i < nums.length; i++) {
-      if (i != max1[0] && nums[i] > max1[1]) {
+      if (i != max1[0] && nums[i] >= max1[1]) {
         max2[0] = max1[0];
         max2[1] = max1[1];
         max1[0] = i;
         max1[1] = nums[i];
-      } else if (i != max1[0] && nums[i] == max1[1]) {
-        max2[0] = i;
-        max2[1] = nums[i];
       }
     }
-    System.out.println(nums.length);
+
     System.out.println(Arrays.toString(max1));
     System.out.println(Arrays.toString(max2));
 
