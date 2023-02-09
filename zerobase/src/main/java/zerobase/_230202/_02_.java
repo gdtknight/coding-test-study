@@ -12,8 +12,6 @@ public class _02_ implements Problem {
 
     boolean[] visited = new boolean[arr.length];
 
-    Set<Integer> result = new HashSet<>();
-
     permutation(arr, 0, 0, arr.length / 3, visited);
 
   }
