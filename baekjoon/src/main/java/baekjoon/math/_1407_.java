@@ -1,6 +1,7 @@
 package baekjoon.math;
 
 import java.io.BufferedReader;
+import java.math.BigDecimal;
 import java.util.StringTokenizer;
 
 import common.Initialization;
@@ -16,24 +17,26 @@ public class _1407_ implements Problem {
     // Your code
     StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 
-    int A = Integer.parseInt(st.nextToken());
-    int B = Integer.parseInt(st.nextToken());
+    long A = Long.parseLong(st.nextToken());
+    long B = Long.parseLong(st.nextToken());
 
-    int result = 0;
+    long answer = 0;
 
-    for (int i = A; i <= B; i++) {
-      int start = i;
-      int cnt = 0;
-      while (start % 2 == 0) {
-        cnt += 1;
+    // solve
 
-        start = start / 2;
+    for (long i = A; i <= B; i++) {
+      String binary = Long.toBinaryString(i);
+      int lastIdxOfOne = binary.lastIndexOf('1');
+      if (lastIdxOfOne != binary.length()) {
+        answer += Long.parseLong(binary.substring(lastIdxOfOne, binary.length()), 2);
+      } else {
+        answer += 1L;
       }
-      result += Double.valueOf(Math.pow(2, cnt)).intValue();
     }
-    System.out.println(result);
+
+    System.out.println(answer);
 
     br.close();
-  }
 
+  }
 }
