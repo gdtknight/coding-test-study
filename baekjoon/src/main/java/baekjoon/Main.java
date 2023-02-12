@@ -3,14 +3,14 @@ package baekjoon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import baekjoon.math._1407_;
+import baekjoon.backtracking._15655_;
 import common.Problem;
 
 public class Main {
 
   public static void main(String[] args) throws Exception {
 
-    Problem problem = new _1407_();
+    Problem problem = new _15655_();
 
     Logger log = LoggerFactory.getLogger(Main.class);
 
