@@ -1,4 +1,4 @@
-package baekjoon.math;
+package baekjoon.backtracking;
 
 import java.io.BufferedReader;
 import java.util.StringTokenizer;

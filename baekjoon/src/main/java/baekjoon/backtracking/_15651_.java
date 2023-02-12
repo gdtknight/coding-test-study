@@ -1,4 +1,4 @@
-package baekjoon.math;
+package baekjoon.backtracking;
 
 import java.io.BufferedReader;
 import java.util.StringTokenizer;
@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 import common.Initialization;
 import common.Problem;
 
-public class _15650_ implements Problem {
+public class _15651_ implements Problem {
 
   public void solution(String[] args) throws Exception {
 
@@ -19,30 +19,28 @@ public class _15650_ implements Problem {
     int N = Integer.parseInt(st.nextToken());
     int M = Integer.parseInt(st.nextToken());
 
-    boolean[] selected = new boolean[N];
+    int[] selected = new int[M];
 
-    permutation(0, M, 0, selected);
+    permutation(0, M, selected);
 
     br.close();
   }
 
-  public void permutation(int selCnt, int totCnt, int startIdx, boolean[] selected) {
+  public void permutation(int selCnt, int N, int[] selected) {
     int n = selected.length;
-    if (selCnt == totCnt) {
+    if (selCnt == N) {
       StringBuilder sb = new StringBuilder();
       for (int i = 0; i < n; i++) {
-        if (selected[i]) {
-          sb.append((i + 1) + " ");
-        }
+        sb.append(selected[i] + " ");
       }
       sb.deleteCharAt(sb.length() - 1);
       System.out.println(sb.toString());
+      return;
     }
 
-    for (int i = startIdx; i < n; i++) {
-      selected[i] = true;
-      permutation(selCnt + 1, totCnt, i + 1, selected);
-      selected[i] = false;
+    for (int i = 1; i <= N; i++) {
+      selected[selCnt] = i;
+      permutation(selCnt + 1, N, selected);
     }
   }
 }
