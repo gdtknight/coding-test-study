@@ -1,6 +1,7 @@
 package baekjoon.backtracking;
 
 import java.io.BufferedReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 import common.Initialization;
@@ -20,32 +21,32 @@ public class _15649_ implements Problem {
     int M = Integer.parseInt(st.nextToken());
 
     int[] arr = new int[N];
-    boolean[] visited = new boolean[N];
+
     for (int i = 0; i < N; i++) {
       arr[i] = i + 1;
     }
 
-    permutation(arr, 0, 0, M, visited);
+    boolean[] visited = new boolean[N];
+    int[] selection = new int[M];
+
+    permutation(arr, 0, M, visited, selection);
 
     br.close();
   }
 
-  public void permutation(int[] arr, int depth, int startIdx, int M, boolean[] visited) {
-    if (depth == M) {
-      for (int i = 0; i < arr.length; i++) {
-        if (visited[i]) {
-          System.out.print(arr[i] + " ");
-        }
-      }
-      System.out.println();
-      System.out.println("-------");
+  public static void permutation(int[] arr, int selectedCnt, int totalCnt, boolean[] visited, int[] selection) {
+    if (selectedCnt == totalCnt) {
+      System.out.println(Arrays.toString(selection).replaceAll("[\\[\\]\\,]", ""));
       return;
     }
 
-    for (int i = startIdx; i < arr.length; i++) {
-      visited[i] = true;
-      permutation(arr, depth + 1, i + 1, M, visited);
-      visited[i] = false;
+    for (int i = 0; i < arr.length; i++) {
+      if (!visited[i]) {
+        visited[i] = true;
+        selection[selectedCnt] = arr[i];
+        permutation(arr, selectedCnt + 1, totalCnt, visited, selection);
+        visited[i] = false;
+      }
     }
 
   }
