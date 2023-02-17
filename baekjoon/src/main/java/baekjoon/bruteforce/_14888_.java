@@ -34,7 +34,7 @@ public class _14888_ implements Problem {
       opCnts[i] = Integer.parseInt(st.nextToken());
     }
 
-    permutationNum(nums, opCnts, 1, nums.length);
+    permutation(nums, opCnts, 0, nums.length - 1);
 
     System.out.println(maxResult);
     System.out.println(minResult);
@@ -42,52 +42,45 @@ public class _14888_ implements Problem {
     br.close();
   }
 
-  public void permutationNum(long[] nums, int[] opCnts, int selectedCnt, int totalCnt) {
+  public void permutation(long[] nums, int[] opCnts, int selectedCnt, int totalCnt) {
     if (selectedCnt == totalCnt) {
-      if (nums[selectedCnt - 1] > maxResult) {
-        maxResult = nums[selectedCnt - 1];
-      }
-      if (nums[selectedCnt - 1] < minResult) {
-        minResult = nums[selectedCnt - 1];
-      }
-
+      maxResult = Math.max(nums[selectedCnt], maxResult);
+      minResult = Math.min(nums[selectedCnt], minResult);
       return;
     }
 
     for (int i = 0; i < 4; i++) {
-      long op1 = nums[selectedCnt - 1];
-      long op2 = nums[selectedCnt];
+      long op1 = nums[selectedCnt];
+      long op2 = nums[selectedCnt + 1];
       if (opCnts[i] > 0) {
         opCnts[i] -= 1;
-        switch (i) {
-          // +
-          case 0:
-            nums[selectedCnt] = op1 + op2;
-            permutationNum(nums, opCnts, selectedCnt + 1, totalCnt);
-            nums[selectedCnt] = op2;
-            break;
-          // -
-          case 1:
-            nums[selectedCnt] = op1 - op2;
-            permutationNum(nums, opCnts, selectedCnt + 1, totalCnt);
-            nums[selectedCnt] = op2;
-            break;
-          // *
-          case 2:
-            nums[selectedCnt] = op1 * op2;
-            permutationNum(nums, opCnts, selectedCnt + 1, totalCnt);
-            nums[selectedCnt] = op2;
-            break;
-          // /
-          case 3:
-            nums[selectedCnt] = op1 / op2;
-            permutationNum(nums, opCnts, selectedCnt + 1, totalCnt);
-            nums[selectedCnt] = op2;
-            break;
+        if (i == 0) {
+
+          nums[selectedCnt + 1] = op1 + op2;
+          permutation(nums, opCnts, selectedCnt + 1, totalCnt);
+          nums[selectedCnt + 1] = op2;
+
+        } else if (i == 1) {
+
+          nums[selectedCnt + 1] = op1 - op2;
+          permutation(nums, opCnts, selectedCnt + 1, totalCnt);
+          nums[selectedCnt + 1] = op2;
+
+        } else if (i == 2) {
+
+          nums[selectedCnt + 1] = op1 * op2;
+          permutation(nums, opCnts, selectedCnt + 1, totalCnt);
+          nums[selectedCnt + 1] = op2;
+
+        } else {
+
+          nums[selectedCnt + 1] = op1 / op2;
+          permutation(nums, opCnts, selectedCnt + 1, totalCnt);
+          nums[selectedCnt + 1] = op2;
         }
+
         opCnts[i] += 1;
       }
-
     }
   }
 }
