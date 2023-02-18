@@ -22,29 +22,30 @@ public class _1654_ implements Problem {
 
     int[] lans = new int[K];
 
+    int minLen = 1;
+    int maxLen = 0;
+
     for (int i = 0; i < K; i++) {
       lans[i] = Integer.parseInt(br.readLine());
+      if (lans[i] > maxLen) {
+        maxLen = lans[i];
+      }
     }
 
-    Arrays.sort(lans);
-
-    int minLen = 0;
-    int maxLen = lans[lans.length - 1];
-    int len = 0;
-    int result = 0;
+    maxLen += 1;
 
     while (minLen < maxLen) {
-      len = (minLen + maxLen) / 2;
+      int midLen = (minLen + maxLen) / 2;
+      int result = 0;
 
-      result = 0;
       for (int i = 0; i < K; i++) {
-        result += lans[i] / len;
+        result += lans[i] / midLen;
       }
 
       if (result < N) {
-        maxLen = len;
+        maxLen = midLen;
       } else {
-        minLen = len + 1;
+        minLen = midLen + 1;
       }
     }
 
