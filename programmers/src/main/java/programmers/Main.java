@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import common.Problem;
-import programmers.lv2.LightPathCycle;
+import programmers.practice.BestAlbum;
 
 public class Main {
 
@@ -14,7 +14,7 @@ public class Main {
 
     log.info("Thread {} started", Thread.currentThread().getName());
 
-    Problem problem = new LightPathCycle();
+    Problem problem = new BestAlbum();
 
     String[] pathFrag = problem.getClass().getName().replaceAll("_", "").split("\\.");
 
