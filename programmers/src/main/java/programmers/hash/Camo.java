@@ -1,52 +1,54 @@
 package programmers.hash;
 
-import java.io.BufferedReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
-import common.Initialization;
 import common.Problem;
 
 public class Camo implements Problem {
   public void solution(String[] args) throws Exception {
-    BufferedReader br = Initialization.getBufferedReaderFromClass(this);
-    // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    String[][] clothes = {
+        { "yellow_hat", "headgear" },
+        { "blue_sunglasses", "eyewear" },
+        { "green_truban", "headgear" }
+    };
+
+    System.out.println(solution(clothes));
   }
 
   public int solution(String[][] clothes) {
-    int answer = 0;
 
-    long[] fact = new long[31];
-
-    fact[1] = 1L;
-    fact[2] = 2L;
-
-    for (int i = 3; i < fact.length; i++) {
-      fact[i] = fact[i - 1] * (long) i;
-    }
-
-    Map<String, Integer> map = new HashMap<>();
-
-    // 1 <= clothes.length <= 30
+    Map<String, List<String>> map = new HashMap<>();
 
     for (int i = 0; i < clothes.length; i++) {
-      answer += 1;
-      map.put(clothes[i][1], map.getOrDefault(clothes[i][1], 0) + 1);
+      List<String> list = null;
+      if (map.containsKey(clothes[i][1])) {
+        list = map.get(clothes[i][1]);
+        list.add(clothes[i][0]);
+        map.put(clothes[i][1], list);
+      } else {
+        list = new ArrayList<>();
+        list.add("");
+        list.add(clothes[i][0]);
+        map.put(clothes[i][1], list);
+      }
     }
 
-    for (int i = 1; i <= map.keySet().size(); i++) {
-      answer += getNumsOfCase(map, i);
-
+    for (Entry<String, List<String>> entry : map.entrySet()) {
+      System.out.println(entry.getKey() + ": " + Arrays.toString(entry.getValue().toArray()));
     }
 
-    return answer;
-  }
+    int answer = 1;
 
-  private int getNumsOfCase(Map<String, Integer> map, int n) {
-    boolean[] visited = new boolean[map.keySet().size()];
+    for (String key : map.keySet()) {
+      answer *= map.get(key).size();
+    }
 
-    return 0;
+    return answer - 1;
   }
 }
