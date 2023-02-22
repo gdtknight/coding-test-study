@@ -3,14 +3,14 @@ package baekjoon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import baekjoon.backtracking._9663_;
+import baekjoon.greedy._1715_;
 import common.Problem;
 
 public class Main {
 
   public static void main(String[] args) throws Exception {
 
-    Problem problem = new _9663_();
+    Problem problem = new _1715_();
 
     Logger log = LoggerFactory.getLogger(Main.class);
 
