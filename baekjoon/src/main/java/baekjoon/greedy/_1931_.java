@@ -28,21 +28,22 @@ public class _1931_ implements Problem {
 
     Arrays.sort(meetings, (o1, o2) -> o1[1] == o2[1] ? o1[0] - o2[0] : o1[1] - o2[1]);
 
-    List<int[]> meetingList = new ArrayList<>();
+    List<int[]> list = new ArrayList<>();
 
-    int[] curMeet = meetings[0];
-    meetingList.add(curMeet);
+    int[] cur = meetings[0];
+    int cnt = 1;
+    list.add(cur);
 
-    for (int i = 1; i < N; i++) {
-      if (curMeet[1] < meetings[i][0]) {
-        curMeet = meetings[i];
-        meetingList.add(curMeet);
+    for (int next = 1; next < N; next++) {
+      if (cur[1] < meetings[next][0]) {
+        cur = meetings[next];
+        cnt += 1;
       }
     }
 
     // meetingList.stream().forEach(meet ->
     // System.out.println(Arrays.toString(meet)));
-    System.out.println(meetingList.size());
+    System.out.println(cnt);
 
     br.close();
   }
