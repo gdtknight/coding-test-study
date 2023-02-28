@@ -1,28 +1,38 @@
 package baekjoon;
 
+import java.math.BigDecimal;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import baekjoon.dp._11727_;
+import baekjoon.dp._10844_;
 import common.Problem;
 
 public class Main {
 
   public static void main(String[] args) throws Exception {
 
-    Problem problem = new _11727_();
-
     Logger log = LoggerFactory.getLogger(Main.class);
 
-    log.info("Thread {} started", Thread.currentThread().getName());
+    Problem problem = new _10844_();
 
     String[] pathFrag = problem.getClass().getName().replaceAll("_", "").split("\\.");
 
+    log.info("Thread {} started", Thread.currentThread().getName());
     log.info("Category: {}", pathFrag[pathFrag.length - 2]);
     log.info("Problem No.{}", pathFrag[pathFrag.length - 1]);
-    log.info("Start solving problem\n");
+    log.info("Start solving problem");
+
+    long start = System.currentTimeMillis();
 
     problem.solution(args);
+
+    long end = System.currentTimeMillis();
+
+    long time = end - start;
+
+    log.info("Time(ms) : {}", time);
+    log.info("Time(s)  : {}", BigDecimal.valueOf(time).divide(BigDecimal.valueOf(1000L)));
 
   }
 
