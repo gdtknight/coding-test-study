@@ -1,13 +1,12 @@
 package baekjoon.bfs;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
+import common.Initialization;
 import common.Problem;
 
 public class _2206_ implements Problem {
@@ -23,128 +22,78 @@ public class _2206_ implements Problem {
 
   public void solution(String[] args) throws Exception {
 
-    String filePath = this.getClass()
-        .getName()
-        .replaceAll("_", "")
-        .replaceAll("\\.", "/");
-
-    System.out.println(filePath);
-
-    File file = new File(this.getClass()
-        .getClassLoader()
-        .getResource(filePath)
-        .getPath());
-
-    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+    BufferedReader br = Initialization.getBufferedReaderFromClass(this);
+    // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     StringTokenizer st = new StringTokenizer(br.readLine());
     N = Integer.parseInt(st.nextToken());
     M = Integer.parseInt(st.nextToken());
 
-    Integer[][] maze = new Integer[N][M];
+    Integer[][][] maze = new Integer[2][N][M];
 
     for (int n = 0; n < N; n++) {
       String[] line = br.readLine().split("");
       for (int m = 0; m < M; m++) {
-        maze[n][m] = Integer.parseInt(line[m]) * (-1);
+        maze[0][n][m] = Integer.parseInt(line[m]) * (-1);
+        maze[1][n][m] = maze[0][n][m];
       }
     }
 
     // 결과 출력 부분
     System.out.println(getDistance(maze));
+
     br.close();
   }
 
-  public static Integer getDistance(Integer[][] maze) {
-    Queue<WallPos> queue = new LinkedList<>();
-    Queue<WallPos> wallQueue = new LinkedList<>();
+  public static Integer getDistance(Integer[][][] maze) {
+    Queue<int[]> queue = new LinkedList<>();
 
-    // 1차 탐색
-    maze[0][0] = 1;
-    queue.offer(new WallPos(0, 0));
+    queue.offer(new int[] { 0, 0, 0 });
+    maze[0][0][0] = 1;
 
     while (!queue.isEmpty()) {
-      WallPos cur = queue.poll();
+      int[] cur = queue.poll();
 
-      int curN = cur.getN();
-      int curM = cur.getM();
+      int curX = cur[0];
+      int curY = cur[1];
+      int destroy = cur[2];
+      int nextStep = Math.abs(maze[destroy][curX][curY]) + 1;
 
-      int distance = maze[curN][curM];
+      find: for (int i = 0; i < dirs.length; i++) {
+        int nextX = curX + dirs[i][0];
+        int nextY = curY + dirs[i][1];
 
-      for (int i = 0; i < dirs.length; i++) {
-
-        int nextN = curN + dirs[i][0];
-        int nextM = curN + dirs[i][1];
-
-        if (isIn(nextN, nextM)) {
-          if (maze[nextN][nextM] == 0) {
-            maze[nextN][nextM] = distance + 1;
-            queue.offer(new WallPos(nextN, nextM));
-
-          } else if (maze[nextN][nextM] == -1) {
-
-            // 벽을 뚫었을 때 길이 통한다면 queue 에 추가
-            for (int j = 0; j < dirs.length; j++) {
-              int n = nextN + dirs[j][0];
-              int m = nextM + dirs[j][1];
-              if (isIn(n, m) && maze[n][m] == 0) {
-                maze[n][m] = distance + 2;
-                wallQueue.offer(new WallPos(n, m));
-              }
-            }
-
-            while (!wallQueue.isEmpty()) {
-              for (int j = 0; j < dirs.length; j++) {
-                int n = nextN + dirs[j][0];
-                int m = nextM + dirs[j][1];
-                if (isIn(n, m) && maze[n][m] == 0) {
-                  maze[n][m] = distance + 2;
-                  wallQueue.offer(new WallPos(n, m));
-                }
-              }
-            }
-          }
+        if (!isIn(nextX, nextY)) {
+          continue find;
         }
+
+        if (destroy == 1 && maze[1][nextX][nextY] <= -1) {
+          continue find;
+        } else if (destroy == 1 && maze[1][nextX][nextY] == 0) {
+          maze[1][nextX][nextY] = nextStep;
+          queue.offer(new int[] { nextX, nextY, destroy });
+        } else if (destroy == 0 && maze[0][nextX][nextY] == -1) {
+          maze[1][nextX][nextY] = nextStep * (-1);
+          queue.offer(new int[] { nextX, nextY, 1 });
+        } else if (destroy == 0 && maze[0][nextX][nextY] == 0) {
+          maze[0][nextX][nextY] = nextStep;
+          queue.offer(new int[] { nextX, nextY, destroy });
+        }
+
       }
+
     }
 
-    return maze[N - 1][M - 1] == 0
-        ? Integer.MAX_VALUE
-        : maze[N - 1][M - 1];
+    return Math.min(maze[0][N - 1][M - 1], maze[1][N - 1][M - 1]) != 0
+        ? Math.min(maze[0][N - 1][M - 1], maze[1][N - 1][M - 1])
+        : Math.max(maze[0][N - 1][M - 1], maze[1][N - 1][M - 1]) == 0
+            ? -1
+            : Math.max(maze[0][N - 1][M - 1], maze[1][N - 1][M - 1]);
   }
 
-  public static boolean isIn(int n, int m) {
-    return (0 <= n && n < N)
-        && (0 <= m && m < M);
+  public static boolean isIn(int x, int y) {
+    return (0 <= x && x < N)
+        && (0 <= y && y < M);
   }
 
-  public static void printMaze(Integer[][] maze) {
-    System.out.println();
-    for (int n = 0; n < N; n++) {
-      for (int m = 0; m < M; m++) {
-        System.out.printf("%6d", maze[n][m]);
-      }
-      System.out.println();
-    }
-    System.out.println();
-  }
-
-}
-
-class WallPos {
-  int n;
-  int m;
-
-  public WallPos(int n, int m) {
-    this.n = n;
-    this.m = m;
-  }
-
-  public int getN() {
-    return n;
-  }
-
-  public int getM() {
-    return m;
-  }
 }
