@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import baekjoon.bfs._2206_;
+import baekjoon.dp._11052_;
 import common.Problem;
 
 public class Main {
@@ -14,7 +14,7 @@ public class Main {
 
     Logger log = LoggerFactory.getLogger(Main.class);
 
-    Problem problem = new _2206_();
+    Problem problem = new _11052_();
 
     String[] pathFrag = problem.getClass().getName().replaceAll("_", "").split("\\.");
 
