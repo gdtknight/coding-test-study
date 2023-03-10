@@ -21,54 +21,20 @@ public class _9375_ implements Problem {
     int numsOfCase = Integer.parseInt(br.readLine());
 
     for (int i = 0; i < numsOfCase; i++) {
-      Map<String, String> map = new HashMap<>();
-      result = 0;
-
       int numsOfLook = Integer.parseInt(br.readLine());
+
+      result = 0;
+      Map<String, Integer> map = new HashMap<>();
 
       for (int j = 0; j < numsOfLook; j++) {
         String[] str = br.readLine().split(" ");
-        map.put(str[0], str[1]);
+        map.put(str[1], map.getOrDefault(str[1], 1) + 1);
       }
 
-      String[] names = new String[map.keySet().size()];
-      map.keySet().toArray(names);
-
-      for (int totalCnt = 1; totalCnt <= map.keySet().size(); totalCnt++) {
-        boolean[] selected = new boolean[map.size()];
-        permutation(map, names, 0, totalCnt, 0, selected);
-      }
-      System.out.println(result);
+      System.out.println(map.values().stream().reduce((n1, n2) -> n1 * n2).orElse(1) - 1);
     }
 
     br.close();
   }
 
-  public void permutation(
-      Map<String, String> map,
-      String[] keyArr,
-      int selectedCnt,
-      int totalCnt,
-      int nextSearchIdx,
-      boolean[] selected) {
-
-    if (selectedCnt == totalCnt) {
-      Set<String> selection = new HashSet<>();
-      for (int i = 0; i < keyArr.length; i++) {
-        if (selected[i] && !selection.add(map.get(keyArr[i]))) {
-          return;
-        }
-      }
-
-      result += 1;
-      return;
-    }
-
-    for (int i = nextSearchIdx; i < keyArr.length; i++) {
-      selected[i] = true;
-      permutation(map, keyArr, selectedCnt + 1, totalCnt, i + 1, selected);
-      selected[i] = false;
-    }
-
-  }
 }
